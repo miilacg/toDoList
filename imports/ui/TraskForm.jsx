@@ -6,6 +6,7 @@ import { TasksCollection } from '/imports/api/TasksCollection';
 export const TaskForm = () => {
 	const [text, setText] = useState('');
 
+	// Adicionando uma nova tarefa
 	const handleSubmit = e => {
 		e.preventDefault();
 
