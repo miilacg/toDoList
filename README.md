@@ -1,8 +1,8 @@
-# <p align="center"> Jogo da velha </p>
+# <br><p align="center"> To do list </p>
 <br>
 
 <p align="center">
-  <img alt="jogo da velha" src="./public/jogodavelha.png" width="25%">
+  <img alt="jogo da velha" src="./images/interface.png" width="50%">
 </p>
 <br>
 
@@ -10,7 +10,7 @@
 
 ## 💻 Projeto
 
-Jogo da velha em React.
+Lista de afazeres implementada utilizando o Meteor React.
 
 
 
@@ -19,11 +19,11 @@ Jogo da velha em React.
 
 Esse projeto foi desenvolvido com as seguintes tecnologias:
 
-- Meteor
+- Meteor React
 - ReactJS
-- JavaScript
 - HTML
 - CSS
+- MongoDB
 
 
 
@@ -32,10 +32,10 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 ### Requisitos
 
-- Você vai precisar instalar o NPM, o [Node.js](https://nodejs.org/en/download/) e o [Meteor](https://www.meteor.com/developers/install) no seu projeto.
+- Você vai precisar instalar o npm (ou o yarn), o [Node.js](https://nodejs.org/en/download/) e o [Meteor](https://www.meteor.com/developers/install) no seu projeto.
 
 * Clone o projeto
-* Instale as dependências com npm
+* Instale as dependências com meteor npm (ou meteor yarn)
 * Inicie o projeto com meteor run
 
 
