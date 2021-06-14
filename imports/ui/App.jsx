@@ -1,32 +1,27 @@
 import React, { useState, Fragment } from 'react';
+import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data'; //cada vez que os dados mudam por meio de reatividade, o componente será renderizado novamente
 
-import { TasksCollection } from '/imports/api/TasksCollection';
-import { TaskForm } from './TraskForm';
+import { TasksCollection } from '../db/TasksCollection';
+import { TaskForm } from './TaskForm';
 import { LoginForm } from './LoginForm';
 import { Task } from './Task';
 
 
 
-const toggleChecked = ({ _id, isChecked }) => {
-  TasksCollection.update(_id, {
-    $set: {
-      isChecked: !isChecked
-    }
-  })
-};
+const toggleChecked = ({ _id, isChecked }) =>
+  Meteor.call('tasks.setIsChecked', _id, !isChecked);
 
-const deleteTask = ({ _id }) => TasksCollection.remove(_id);
+const deleteTask = ({ _id }) => Meteor.call('tasks.remove', _id);
 
 
 export const App = () => {
   const user = useTracker(() => Meteor.user()); //obtem o usuário autenticado ou nulo
 
   const [hideCompleted, setHideCompleted] = useState(false);
-  const hideCompletedFilter = { isChecked: { $ne: true }}; // o $ é usado para consultas quando envolver comparação de não igual ou igual sim
+  const hideCompletedFilter = { isChecked: { $ne: true } }; // o $ é usado para consultas quando envolver comparação de não igual ou igual sim
   const userFilter = user ? { userId: user._id} : {}; // filtra as tarefas pelo id do usuario
   const pendingOnlyFilter = { ...hideCompletedFilter, ...userFilter };
-  const logout = () => Meteor.logout();
 
   const tasks = useTracker(() => {
     if (!user) {
@@ -52,6 +47,8 @@ export const App = () => {
 
   const pendingTasksTitle = `${ pendingTasksCount ? `(${ pendingTasksCount })` : '' }`;
 
+  const logout = () => Meteor.logout();
+
 
   return(
     <div className='app'>
@@ -67,10 +64,10 @@ export const App = () => {
         { user ? (
           <Fragment>
             <div className='user' onClick={ logout }>
-              { user.username }
+              { user.username } 🚪
             </div>
             
-            <TaskForm user={ user }/>
+            <TaskForm />
 
             <div className='filter'>
               <button onClick={ () => setHideCompleted(!hideCompleted) }>
