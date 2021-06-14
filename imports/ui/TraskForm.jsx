@@ -3,7 +3,7 @@ import { TasksCollection } from '/imports/api/TasksCollection';
 
 
 
-export const TaskForm = () => {
+export const TaskForm = ({ user }) => {
 	const [text, setText] = useState('');
 
 	// Adicionando uma nova tarefa
@@ -14,7 +14,8 @@ export const TaskForm = () => {
 
 		TasksCollection.insert({
 			text: text.trim(),
-			createdAt: new Date()
+			createdAt: new Date(),
+			userId: user._id,
 		});
 
 		setText('');

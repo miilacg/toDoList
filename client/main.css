@@ -77,6 +77,59 @@ button:focus {
   margin-right: 1em;
 }
 
+
+/* Página de login*/
+.login-form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form > div {
+  margin: 8px;
+}
+
+.login-form > div > label {
+  font-weight: bold;
+}
+
+.login-form > div > input {
+  flex-grow: 1;
+  box-sizing: border-box;
+  padding: 10px 6px;
+  background: transparent;
+  border: 1px solid #aaa;
+  width: 100%;
+  font-size: 1em;
+  margin-right: 16px;
+  margin-top: 4px;
+}
+
+.login-form > div > input:focus {
+  outline: 0;
+}
+
+.login-form > div > button {
+  background-color: #62807e;
+  padding: 5px 7px;
+}
+
+
+/* Página com as tarefas */
+.user {
+  display: flex;
+
+  align-self: flex-end;
+
+  margin: 8px 16px 0;
+  font-weight: bold;
+}
+
+
+/* Adicionar nova atividade */
 .task-form {
   display: flex;
   margin: 1rem;
@@ -103,6 +156,8 @@ button:focus {
   background-color: #315481;
 }
 
+
+/* Exclusão da atividade */
 .tasks {
   list-style-type: none;
   padding-inline-start: 0;
@@ -127,6 +182,8 @@ button:focus {
   background-color: #ff3046;
 }
 
+
+/* Filtro das atividades */
 .filter {
   display: flex;
   justify-content: center;

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { useTracker } from 'meteor/react-meteor-data'; //cada vez que os dados mudam por meio de reatividade, o componente será renderizado novamente
 
 import { TasksCollection } from '/imports/api/TasksCollection';
 import { TaskForm } from './TraskForm';
+import { LoginForm } from './LoginForm';
 import { Task } from './Task';
 
 
@@ -19,18 +20,35 @@ const deleteTask = ({ _id }) => TasksCollection.remove(_id);
 
 
 export const App = () => {
+  const user = useTracker(() => Meteor.user()); //obtem o usuário autenticado ou nulo
+
   const [hideCompleted, setHideCompleted] = useState(false);
-  const hideCompletedFilter = { isChecked: { $ne: true }};
+  const hideCompletedFilter = { isChecked: { $ne: true }}; // o $ é usado para consultas quando envolver comparação de não igual ou igual sim
+  const userFilter = user ? { userId: user._id} : {}; // filtra as tarefas pelo id do usuario
+  const pendingOnlyFilter = { ...hideCompletedFilter, ...userFilter };
+  const logout = () => Meteor.logout();
 
-  const tasks = useTracker(() => 
-    TasksCollection.find(hideCompleted ? hideCompletedFilter : {}, { 
-      sort: { createdAt: -1 },
-    }).fetch()
-  );
+  const tasks = useTracker(() => {
+    if (!user) {
+      return [];
+    }
 
-  const pendingTasksCount = useTracker(() => 
-    TasksCollection.find(hideCompletedFilter).count()
-  );
+    return TasksCollection.find(
+      hideCompleted ? pendingOnlyFilter : userFilter,
+      {
+        sort: { createdAt: -1 },
+      }
+    ).fetch();
+  });
+
+  // Conta quantos itens não foram feitos
+  const pendingTasksCount = useTracker(() => {
+    if (!user) {
+      return 0;
+    }
+
+    return TasksCollection.find(pendingOnlyFilter).count();
+  });
 
   const pendingTasksTitle = `${ pendingTasksCount ? `(${ pendingTasksCount })` : '' }`;
 
@@ -46,24 +64,34 @@ export const App = () => {
       </header>
       
       <div className='main'>
-        <TaskForm />
+        { user ? (
+          <Fragment>
+            <div className='user' onClick={ logout }>
+              { user.username }
+            </div>
+            
+            <TaskForm user={ user }/>
 
-        <div className='filter'>
-          <button onClick={ () => setHideCompleted(!hideCompleted) }>
-            { hideCompleted ? 'Show All' : 'Hide Completed' }
-          </button>          
-        </div>
+            <div className='filter'>
+              <button onClick={ () => setHideCompleted(!hideCompleted) }>
+                { hideCompleted ? 'Show All' : 'Hide Completed' }
+              </button>          
+            </div>
 
-        <ul className='tasks'>
-          { tasks.map(task => 
-            <Task 
-              key={ task._id } 
-              task={ task }
-              onCheckboxClick={ toggleChecked }
-              onDeleteClick={ deleteTask }
-            />
-          ) }
-        </ul>
+            <ul className='tasks'>
+              { tasks.map(task => (
+                <Task 
+                  key={ task._id } 
+                  task={ task }
+                  onCheckboxClick={ toggleChecked }
+                  onDeleteClick={ deleteTask }
+                />
+              )) }
+            </ul>
+          </Fragment>
+        ) : (
+          <LoginForm />
+        )}    
       </div>      
     </div>
   );
