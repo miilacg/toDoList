@@ -2,7 +2,7 @@
 <br>
 
 <p align="center">
-  <img alt="jogo da velha" src="./images/interface.png" width="95%">
+  <img alt="jogo da velha" src="./public/images/interface.png" width="95%">
 </p>
 <br>
 
