@@ -3,29 +3,33 @@ import { Meteor } from 'meteor/meteor';
 
 
 
-export const LoginForm = () => {
+export const CreateUserForm = () => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
-	const submit = e => {
+	// Adicionando novo usuario
+	const handleSubmit = e => {
 		e.preventDefault();
 
-		// Autenticar o usuário com as entradas fornecidas
-		Meteor.loginWithPassword(username, password);
+		if(!username || !password) return;
+
+		Meteor.call('users.insert', username, password);
+		setUsername('');
+		setPassword('');
 	};
 
 
 	return (
-		<form onSubmit={ submit } className='login-form'>
+		<form onSubmit={ handleSubmit } className='login-form'>
 			<div>
 				<label htmlFor='username'>Username</label>
 
 				<input 
 					type='text'
 					placeholder='Username'
-					name='username'
+					value={ username }
 					required
-					onChange={ e => setUsername(e.target.value) }
+					onChange={ (e) => setUsername(e.target.value) }
 				/>
 			</div>
 
@@ -35,14 +39,14 @@ export const LoginForm = () => {
 				<input 
 					type='password'
 					placeholder='Password'
-					name='password'
+					value={ password }
 					required
-					onChange={ e => setPassword(e.target.value) }
+					onChange={ (e) => setPassword(e.target.value) }
 				/>
 			</div>
 
-			<div>				
-				<button type='submit'>Log In</button>				
+			<div>
+				<button type='submit'>Create</button>
 			</div>
 		</form> 
 	);
