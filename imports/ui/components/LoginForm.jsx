@@ -41,8 +41,8 @@ export const LoginForm = () => {
 				/>
 			</div>
 
-			<div>
-				<button type='submit'>Log In</button>
+			<div>				
+				<button type='submit'> Create </button>				
 			</div>
 		</form> 
 	);

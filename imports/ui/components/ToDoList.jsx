@@ -4,10 +4,11 @@ import { useTracker } from 'meteor/react-meteor-data'; //cada vez que os dados m
 import { createBrowserHistory } from "history";
 
 import { TasksCollection } from '../../db/TasksCollection';
-import { TaskForm } from '../TaskForm';
-import { LoginForm } from '../LoginForm';
-import { Task } from '../Task';
+
 import { Header } from './Header';
+import { LoginForm } from './LoginForm';
+import { Task } from './Task';
+import { TaskForm } from './TaskForm';
 
 
 
