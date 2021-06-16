@@ -134,14 +134,30 @@ button:focus {
 }
 
 
-/* Página com as tarefas */
+/* Modal */
 .user {
   display: flex;
-
   align-self: flex-end;
-
   margin: .5rem 1rem 0;
+  box-shadow: none;
+
+  background: transparent;
+  color: black;
   font-weight: bold;
+}
+
+.modal-content {
+  margin: 0 auto;
+  width: 80%;
+}
+
+#modalExemplo button {
+  box-shadow: none;
+}
+
+.modal-body h5 {
+  font-weight: normal;
+  line-height: 2;
 }
 
 
@@ -227,14 +243,14 @@ input[type=checkbox]:checked + label img {
 
   font-size: 1.15rem;
   padding: .5rem;
-  line-height: .6;
+  line-height: 1;
 }
 
 
 /* Filtro das atividades */
 .filter {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .filter > button {

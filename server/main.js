@@ -1,9 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 
-import { TasksCollection } from '/imports/db/TasksCollection';
-import '/imports/api/TasksMetods';
-import '/imports/api/TasksPublications';
+import { TasksCollection } from '../imports/db/TasksCollection';
+import '../imports/api/TasksMetods';
+import '../imports/api/TasksPublications';
+import '../imports/api/UserMethods';
 
 
 
@@ -14,30 +15,7 @@ const insertTask = (taskText, user) =>
     createdAt: new Date(), 
   });
 
-const SEED_USERNAME = 'meteorite';
-const SEED_PASSWORD = 'password';
-
 
 Meteor.startup(() => {
-  // um novo usuario é criado na inicialização do servidor apenas se não for encontrado no BD
-  if(!Accounts.findUserByUsername(SEED_USERNAME)) {
-    Accounts.createUser({
-      username: SEED_USERNAME,
-      password: SEED_PASSWORD,
-    });
-  }
-
-  const user = Accounts.findUserByUsername(SEED_USERNAME);
-
-  if (TasksCollection.find().count() === 0) {
-    [
-      'First Task',
-      'Second Task',
-      'Third Task',
-      'Fourth Task',
-      'Fifth Task',
-      'Sixth Task',
-      'Seventh Task'
-    ].forEach(taskText => insertTask(taskText, user));
-  }
+  //const user = Accounts.findUserByUsername(SEED_USERNAME);
 });
