@@ -32,7 +32,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 ### Requisitos
 
-- Você vai precisar instalar o npm (ou o yarn), o [Node.js](https://nodejs.org/en/download/) e o [Meteor](https://www.meteor.com/developers/install) no seu projeto.
+- Você vai precisar instalar o [Npm](https://www.npmjs.com/) (ou o [Yarn](https://yarnpkg.com/)), o [Node.js](https://nodejs.org/en/download/) e o [Meteor](https://www.meteor.com/developers/install) no seu projeto.
 
 * Clone o projeto
 * Instale as dependências com meteor npm install (ou meteor yarn install)
