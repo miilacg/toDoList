@@ -41,34 +41,26 @@ export const LoginForm = () => {
 					Usuário ou senha incorreto
 				</Alert>	
 
-				<form onSubmit={ submit } className='login-form'>
-					<div>
-						<label htmlFor='username'>Username</label>
+				<form onSubmit={ submit } className='login-form'>	
+					<h1>Bem vindo ao To Do List</h1>
 
-						<input 
-							type='text'
-							placeholder='Username'
-							name='username'
-							required
-							onChange={ e => setUsername(e.target.value) }
-						/>
-					</div>
+					<input 
+						type='text'
+						placeholder='Username'
+						name='username'
+						required
+						onChange={ e => setUsername(e.target.value) }
+					/>
+				
+					<input 
+						type='password'
+						placeholder='Password'
+						name='password'
+						required
+						onChange={ e => setPassword(e.target.value) }
+					/>
 
-					<div>
-						<label htmlFor='password'>Password</label>
-
-						<input 
-							type='password'
-							placeholder='Password'
-							name='password'
-							required
-							onChange={ e => setPassword(e.target.value) }
-						/>
-					</div>
-
-					<div>				
-						<button type='submit'>Log In</button>				
-					</div>
+					<button type='submit'>Entrar</button>				
 				</form> 
 			</div>
 		</div>

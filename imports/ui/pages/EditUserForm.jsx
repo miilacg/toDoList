@@ -27,33 +27,23 @@ export const EditUserForm = () => {
 
 			<div className='main'>
 				<form onSubmit={ handleSubmit } className='login-form'>
-					<div>
-						<label htmlFor='username'>Username</label>
+					<input 
+						type='text'
+						placeholder='Username'
+						value={ username }
+						required
+						onChange={ (e) => setUsername(e.target.value) }
+					/>
+				
+					<input 
+						type='password'
+						placeholder='Password'
+						value={ password }
+						required
+						onChange={ (e) => setPassword(e.target.value) }
+					/>
 
-						<input 
-							type='text'
-							placeholder='Username'
-							value={ username }
-							required
-							onChange={ (e) => setUsername(e.target.value) }
-						/>
-					</div>
-
-					<div>
-						<label htmlFor='password'>Password</label>
-
-						<input 
-							type='password'
-							placeholder='Password'
-							value={ password }
-							required
-							onChange={ (e) => setPassword(e.target.value) }
-						/>
-					</div>
-
-					<div>
-						<button type='submit'>Save</button>
-					</div>
+					<button type='submit'>Salvar alterações</button>	
 				</form> 
 			</div>
 		</div>
