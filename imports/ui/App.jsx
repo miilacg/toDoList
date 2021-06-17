@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import { CreateUserForm } from './components/CreateUserForm';
-import { EditUserForm } from './components/EditUserForm';
-import { LoginForm } from './components/LoginForm';
-import { ToDoList } from './components/ToDoList';
+import { CreateUserForm } from './pages/CreateUserForm';
+import { EditUserForm } from './pages/EditUserForm';
+import { LoginForm } from './pages/LoginForm';
+import { ToDoList } from './pages/ToDoList';
 
 
 

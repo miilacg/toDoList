@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { useTracker } from 'meteor/react-meteor-data';
 
-import { Header } from './Header';
+import { Header } from '../components/Header';
 
 
 
 export const EditUserForm = () => {
-	const user = useTracker(() => Meteor.user());
-
-	const [username, setUsername] = useState(user.username);
+	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
 	// Editando o usuario

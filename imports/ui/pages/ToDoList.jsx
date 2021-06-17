@@ -5,9 +5,9 @@ import { useHistory } from "react-router-dom";
 
 import { TasksCollection } from '../../db/TasksCollection';
 
-import { Header } from './Header';
-import { Task } from './Task';
-import { TaskForm } from './TaskForm';
+import { Header } from '../components/Header';
+import { Task } from '../components/Task';
+import { TaskForm } from '../components/TaskForm';
 
 
 
@@ -25,7 +25,7 @@ function deleteUser(_id) {
 
 export const ToDoList = () => {
   let history = useHistory();
-
+  
   const user = useTracker(() => Meteor.user()); //obtem o usuário autenticado ou nulo
   const [hideCompleted, setHideCompleted] = useState(false);
   const hideCompletedFilter = { isChecked: { $ne: true } }; // o $ é usado para consultas quando envolver comparação de não igual ou igual sim
@@ -53,21 +53,21 @@ export const ToDoList = () => {
     const pendingTasksCount = TasksCollection.find(pendingOnlyFilter).count();
     return { tasks, pendingTasksCount };
   });
-
-  const pendingTasksTitle = `${ pendingTasksCount ? `(${ pendingTasksCount })` : '' }`;
+  
+  const pendingTasksTitle = `${ pendingTasksCount ? `(${ pendingTasksCount })` : '' }`;  
 
   const logout = () => {
     history.push('/');
     Meteor.logout();    
   }
   
-
+  const name = Meteor.user();
   return(
     <div className='app'>      
       <Header pendingTasksTitle={ pendingTasksTitle } />     	  
 
-      <div className='main'>
-       { user ? (
+      <div className='main'>       
+        { user ? (
           <>         
             <button type="button" className='user' data-toggle="modal" data-target="#modalExemplo">
               { user.username } 🚪
@@ -117,7 +117,7 @@ export const ToDoList = () => {
           </>
         ) : (
           ''
-        )}    
+        )}      
       </div>      
     </div>
   );

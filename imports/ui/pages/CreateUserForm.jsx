@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 
-import { Header } from './Header';
+import { Header } from '../components/Header';
 
 
 

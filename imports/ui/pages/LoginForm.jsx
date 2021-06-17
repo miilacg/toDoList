@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { useHistory } from "react-router-dom";
 import { Alert } from '@material-ui/lab';
 
-import { Header } from './Header';
+import { Header } from '../components/Header';
 
 
 
@@ -13,19 +13,22 @@ export const LoginForm = () => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
+	function login() {
+		if (Meteor.user()) {
+			history.push('/toDoList');
+		} else {
+			const error = document.getElementById('error');
+			error.setAttribute("style", "display: flex");
+		} 
+	}
+
+
 	async function submit(e) {
 		e.preventDefault();
 
 		// Autenticar o usuário com as entradas fornecidas
 		Meteor.loginWithPassword(username, password);
-		const user = Meteor.user();
-
-		if (user) {
-			history.push('/toDoList');
-		} else {
-			const error = document.getElementById('error');
-			error.setAttribute("style", "display:flex");
-		} 
+		login();
 	}
 
 
