@@ -19,10 +19,6 @@ const deleteTask = ({ _id }) => {
   Meteor.call('tasks.remove', _id);
 }
 
-function editUser(_id,  username,  password) {
-  Meteor.call('users.edit', _id,  username,  password);
-}
-
 function deleteUser(_id) {
   Meteor.call('users.remove', _id);
 }
@@ -56,13 +52,18 @@ export const ToDoList = () => {
     return { tasks, pendingTasksCount };
   });
 
-  const pendingTasksTitle = `${ pendingTasksCount ? `(${ pendingTasksCount })` : '0' }`;
+  const pendingTasksTitle = `${ pendingTasksCount ? `(${ pendingTasksCount })` : '' }`;
 
   const logout = () => Meteor.logout();
+  
 
   return(
     <div className='app'>
-      <Header pendingTasksTitle={ pendingTasksTitle } createUser='/createUser'/> 	  
+      { user ? (
+        <Header pendingTasksTitle={ pendingTasksTitle } /> 
+      ) : (
+        <Header createUser='/createUser' /> 
+      )}      	  
 
       <div className='main'>
         { user ? (
