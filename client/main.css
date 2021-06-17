@@ -35,7 +35,7 @@ button {
 }
 
 button:focus {
-  outline: 0;
+  outline: none;
 }
 
 .app {
@@ -285,4 +285,24 @@ input[type=checkbox]:checked + label img {
   align-items: center;
 
   font-weight: bold;
+}
+
+
+/* Mensagem de erro */
+.error {
+  justify-content: center;
+  margin: 4rem auto;
+  margin-bottom: -6rem;
+  padding: .5rem 2rem;
+  height: auto;
+  width: auto;
+}
+
+.MuiAlert-icon {
+  font-size: 2rem;
+}
+
+.MuiAlert-message {
+  font-size: 1rem;
+  align-self: center;
 }

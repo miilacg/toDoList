@@ -6,7 +6,6 @@ import { useHistory } from "react-router-dom";
 import { TasksCollection } from '../../db/TasksCollection';
 
 import { Header } from './Header';
-import { LoginForm } from './LoginForm';
 import { Task } from './Task';
 import { TaskForm } from './TaskForm';
 

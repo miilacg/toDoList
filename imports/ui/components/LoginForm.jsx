@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useHistory } from "react-router-dom";
+import { Alert } from '@material-ui/lab';
 
 import { Header } from './Header';
 
@@ -12,24 +13,31 @@ export const LoginForm = () => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
-	const submit = e => {
+	async function submit(e) {
 		e.preventDefault();
 
 		// Autenticar o usuário com as entradas fornecidas
 		Meteor.loginWithPassword(username, password);
-
 		const user = Meteor.user();
-		if(user) {
-			history.push('/toDoList'); 
-		}
-	};
+
+		if (user) {
+			history.push('/toDoList');
+		} else {
+			const error = document.getElementById('error');
+			error.setAttribute("style", "display:flex");
+		} 
+	}
 
 
 	return (
 		<div className='app'>
 			<Header createUser='/createUser'/> 
-
+			
 			<div className='main'>
+				<Alert id='error' className='error' style={{ display:'none' }} severity="error">
+					Usuário ou senha incorreto
+				</Alert>	
+
 				<form onSubmit={ submit } className='login-form'>
 					<div>
 						<label htmlFor='username'>Username</label>
