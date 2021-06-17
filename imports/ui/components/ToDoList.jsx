@@ -19,8 +19,11 @@ const deleteTask = ({ _id }) => {
   Meteor.call('tasks.remove', _id);
 }
 
+function editUser(_id,  username,  password) {
+  Meteor.call('users.edit', _id,  username,  password);
+}
+
 function deleteUser(_id) {
-  console.log("oii");
   Meteor.call('users.remove', _id);
 }
 
@@ -53,13 +56,13 @@ export const ToDoList = () => {
     return { tasks, pendingTasksCount };
   });
 
-  const pendingTasksTitle = `${ pendingTasksCount ? `(${ pendingTasksCount })` : '' }`;
+  const pendingTasksTitle = `${ pendingTasksCount ? `(${ pendingTasksCount })` : '0' }`;
 
   const logout = () => Meteor.logout();
 
   return(
     <div className='app'>
-      <Header pendingTasksTitle={ pendingTasksTitle }/> 	  
+      <Header pendingTasksTitle={ pendingTasksTitle } createUser='/createUser'/> 	  
 
       <div className='main'>
         { user ? (
@@ -79,6 +82,9 @@ export const ToDoList = () => {
                   </div>
 
                   <div class="modal-body">
+                    <h5>
+                      <a href="/editUser">Editar usuário</a>
+                    </h5>
                     <h5 data-dismiss="modal" aria-label="Excluir usuário" onClick={ () => deleteUser(user._id) }>Excluir usuário</h5>
                     <h5 data-dismiss="modal" aria-label="Sair" onClick={ logout }>Sair</h5>                    
                   </div>
