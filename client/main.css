@@ -146,6 +146,10 @@ button:focus {
   font-weight: bold;
 }
 
+.user:focus {
+  outline: none;
+}
+
 .modal-content {
   margin: 0 auto;
   width: 80%;
@@ -158,6 +162,19 @@ button:focus {
 .modal-body h5 {
   font-weight: normal;
   line-height: 2;
+}
+
+.modal-body h5 a {
+  color: black;
+}
+
+.modal-body h5 a:hover {
+  text-decoration: none;
+}
+
+.user:focus-visible,
+.user:focus {
+  outline: none;
 }
 
 

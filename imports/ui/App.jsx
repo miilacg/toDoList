@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
 import { CreateUserForm } from './components/CreateUserForm';
+import { EditUserForm } from './components/EditUserForm';
 import { Header } from './components/Header';
 import { ToDoList } from './components/ToDoList';
 
@@ -28,7 +29,11 @@ export default function App() {
 
 						<Route path="/createUser">
 							<CreateUserForm />
-						</Route>					
+						</Route>
+
+						<Route path="/editUser">
+							<EditUserForm />
+						</Route>						
 					</Switch>
 				</Router>
 			</div>

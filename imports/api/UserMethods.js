@@ -20,19 +20,19 @@ Meteor.methods ({
 		}
 	},
 	
-	'users.edit'(userId, username, password) {
-		check(userId, String);
+	'users.edit'(username, password) {
 		check(username, String);
 		check(password, String);
-		
+
+		const user = Meteor.users.findOne({ _id: this.userId });
+
 		if (!this.userId) {
 			throw new Meteor.Error('Not authorized.');
 		}
 
-		const user = Meteor.users.findOne({ _id: userId });
 		if(user.username != username){
 			if(!Accounts.findUserByUsername(username)) {
-				Meteor.users.update({ _id: userId }, {
+				Meteor.users.update({ _id: this.userId }, {
 					$set: {
 						username: username,
 						password: password, 
@@ -42,7 +42,7 @@ Meteor.methods ({
 				throw new Meteor.Error('Usuario já existe');
 			}	
 		} else { // se o username for igual ao user não precisa alterar
-			Meteor.users.update({ _id: userId }, {
+			Meteor.users.update({ _id: this.userId }, {
 				$set: {
 					password: password, 
 				},
