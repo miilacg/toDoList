@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data'; //cada vez que os dados mudam por meio de reatividade, o componente será renderizado novamente
+import { useHistory } from "react-router-dom";
 
 import { TasksCollection } from '../../db/TasksCollection';
 
@@ -24,6 +25,8 @@ function deleteUser(_id) {
 }
 
 export const ToDoList = () => {
+  let history = useHistory();
+
   const user = useTracker(() => Meteor.user()); //obtem o usuário autenticado ou nulo
   const [hideCompleted, setHideCompleted] = useState(false);
   const hideCompletedFilter = { isChecked: { $ne: true } }; // o $ é usado para consultas quando envolver comparação de não igual ou igual sim
@@ -54,19 +57,18 @@ export const ToDoList = () => {
 
   const pendingTasksTitle = `${ pendingTasksCount ? `(${ pendingTasksCount })` : '' }`;
 
-  const logout = () => Meteor.logout();
+  const logout = () => {
+    history.push('/');
+    Meteor.logout();    
+  }
   
 
   return(
-    <div className='app'>
-      { user ? (
-        <Header pendingTasksTitle={ pendingTasksTitle } /> 
-      ) : (
-        <Header createUser='/createUser' /> 
-      )}      	  
+    <div className='app'>      
+      <Header pendingTasksTitle={ pendingTasksTitle } />     	  
 
       <div className='main'>
-        { user ? (
+       { user ? (
           <>         
             <button type="button" className='user' data-toggle="modal" data-target="#modalExemplo">
               { user.username } 🚪
@@ -115,7 +117,7 @@ export const ToDoList = () => {
             </ul>
           </>
         ) : (
-          <LoginForm />
+          ''
         )}    
       </div>      
     </div>

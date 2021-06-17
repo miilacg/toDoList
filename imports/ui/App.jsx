@@ -1,42 +1,33 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { createBrowserHistory } from "history";
 
 import { CreateUserForm } from './components/CreateUserForm';
 import { EditUserForm } from './components/EditUserForm';
-import { Header } from './components/Header';
+import { LoginForm } from './components/LoginForm';
 import { ToDoList } from './components/ToDoList';
 
 
 
 export default function App() {
-	const history = createBrowserHistory();
+  return (		
+		<Router>
+			<Switch>
+				<Route path="/" exact>
+					<LoginForm />
+				</Route>
 
-  return (
-		<div className='app'>
-			{ history.location.pathname != '/' ? ( 
-				<Header /> 
-			) : (
-				''
-			) }			
+				<Route path="/createUser">
+					<CreateUserForm />
+				</Route>
 
-			<div className='main'>
-				<Router>
-					<Switch>
-						<Route path="/" exact>
-							<ToDoList />
-						</Route>
+				<Route path="/editUser">
+					<EditUserForm />
+				</Route>		
 
-						<Route path="/createUser">
-							<CreateUserForm />
-						</Route>
-
-						<Route path="/editUser">
-							<EditUserForm />
-						</Route>						
-					</Switch>
-				</Router>
-			</div>
-		</div>
+				<Route path="/toDoList">
+					<ToDoList />
+				</Route>				
+			</Switch>
+		</Router>
   );
 }

@@ -11,7 +11,7 @@ export function Header({ createUser, pendingTasksTitle }) {
 				</a>
 
 				{ createUser ? ( // Se for a página de login		
-					<a href="/createUser">Criar conta</a>
+					<a href={ createUser }>Criar conta</a>
 				) : ( // Se for qualquer outra página
 					''					
 				)}    

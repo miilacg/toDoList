@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 
+import { Header } from './Header';
+
 
 
 export const CreateUserForm = () => {
@@ -20,34 +22,40 @@ export const CreateUserForm = () => {
 
 
 	return (
-		<form onSubmit={ handleSubmit } className='login-form'>
-			<div>
-				<label htmlFor='username'>Username</label>
+		<div className='app'>
+			<Header /> 
 
-				<input 
-					type='text'
-					placeholder='Username'
-					value={ username }
-					required
-					onChange={ (e) => setUsername(e.target.value) }
-				/>
+			<div className='main'>
+				<form onSubmit={ handleSubmit } className='login-form'>
+					<div>
+						<label htmlFor='username'>Username</label>
+
+						<input 
+							type='text'
+							placeholder='Username'
+							value={ username }
+							required
+							onChange={ (e) => setUsername(e.target.value) }
+						/>
+					</div>
+
+					<div>
+						<label htmlFor='password'>Password</label>
+
+						<input 
+							type='password'
+							placeholder='Password'
+							value={ password }
+							required
+							onChange={ (e) => setPassword(e.target.value) }
+						/>
+					</div>
+
+					<div>
+						<button type='submit'>Create</button>
+					</div>
+				</form> 
 			</div>
-
-			<div>
-				<label htmlFor='password'>Password</label>
-
-				<input 
-					type='password'
-					placeholder='Password'
-					value={ password }
-					required
-					onChange={ (e) => setPassword(e.target.value) }
-				/>
-			</div>
-
-			<div>
-				<button type='submit'>Create</button>
-			</div>
-		</form> 
+		</div>
 	);
 };
