@@ -1,23 +1,28 @@
 import React from 'react';
+import { ListItem, ListItemSecondaryAction, ListItemText, Checkbox, ListItemIcon, IconButton } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 
-export const Task = ({ task, onCheckboxClick, onDeleteClick }) => {
+
+export const Task = ({ task, user, onCheckboxClick, onDeleteClick }) => {
 	return (
-		<li>			
-			<input
-				id={ `check${ task._id }`} 
-				type='checkbox'
-				checked={ !!task.isChecked }
-				onClick={ () => onCheckboxClick(task) }
-				readOnly
-			/>
+		<ListItem key={ task._id }>
+      <ListItemIcon>
+				<Checkbox
+					edge="start"
+					id={ `check${ task._id }`} 
+					onClick={ () => onCheckboxClick(task) }
+					checked={ !!task.isChecked }
+				/>
+      </ListItemIcon>
 
-			<label for={ `check${ task._id }`}>
-				<img src='/images/check.png' />
-			</label>		
+      <ListItemText id={ task._id } primary={ task.text } secondary={ user }/>
 
-			<span> { task.text } </span>
-			<button onClick={ () => onDeleteClick(task) }> &times; </button> {/*Remover uma tarefa*/}
-		</li>
+			<ListItemSecondaryAction>
+        <IconButton edge="end" aria-label="delete" onClick={ () => onDeleteClick(task) }>
+          <DeleteIcon />
+        </IconButton>
+      </ListItemSecondaryAction>
+    </ListItem>
 	)
 };

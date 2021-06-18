@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data'; //cada vez que os dados mudam por meio de reatividade, o componente será renderizado novamente
 import { useHistory } from "react-router-dom";
+import { List } from '@material-ui/core';
 
 import { TasksCollection } from '../../db/TasksCollection';
 
@@ -61,7 +62,6 @@ export const ToDoList = () => {
     Meteor.logout();    
   }
   
-  const name = Meteor.user();
   return(
     <div className='app'>      
       <Header pendingTasksTitle={ pendingTasksTitle } />     	  
@@ -104,16 +104,17 @@ export const ToDoList = () => {
 
             { isLoading && <div className='loading'>loading...</div> }
 
-            <ul className='tasks'>
+            <List className='tasks'>
               { tasks.map(task => (
                 <Task 
                   key={ task._id } 
                   task={ task }
+                  user={ user.username }
                   onCheckboxClick={ toggleChecked }
                   onDeleteClick={ deleteTask }
                 />
               )) }
-            </ul>
+            </List>
           </>
         ) : (
           ''
