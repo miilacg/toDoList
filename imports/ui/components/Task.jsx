@@ -1,6 +1,15 @@
 import React from 'react';
-import { ListItem, ListItemSecondaryAction, ListItemText, Checkbox, ListItemIcon, IconButton } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { 
+					ListItem, 
+					ListItemSecondaryAction, 
+					ListItemText, 
+					Checkbox, 
+					ListItemIcon, 
+					IconButton 
+				} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 
 
 
@@ -17,9 +26,15 @@ export const Task = ({ task, user, onCheckboxClick, onDeleteClick }) => {
       </ListItemIcon>
 
       <ListItemText id={ task._id } primary={ task.text } secondary={ user }/>
-
+		
 			<ListItemSecondaryAction>
-        <IconButton edge="end" aria-label="delete" onClick={ () => onDeleteClick(task) }>
+				<IconButton className='editar' aria-label="editar tarefa">
+					<Link to={ `/editTask/${ task._id }` } >
+						<VisibilityOutlinedIcon />
+					</Link>	
+				</IconButton>	
+
+				<IconButton edge="end" aria-label="excluir tarefa" onClick={ () => onDeleteClick(task) }>
           <DeleteIcon />
         </IconButton>
       </ListItemSecondaryAction>
