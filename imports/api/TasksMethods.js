@@ -15,6 +15,7 @@ Meteor.methods ({
 			text,
 			createdAt: new Date,
 			userId: this.userId,
+			description: ''
 		});
 	},
 
@@ -53,6 +54,32 @@ Meteor.methods ({
 		TasksCollection.update(taskId, {
 			$set: {
 				isChecked
+			},
+		});
+	},
+	
+	'tasks.edit'(taskId, description, nameTask, isChecked) {
+		check(taskId, String);
+		check(nameTask, String);
+		check(description, String);
+		check(isChecked, Boolean);
+		
+		if (!this.userId) {
+			throw new Meteor.Error('Not authorized.');
+		}
+
+		// verificando a permissão do usuario
+		const task = TasksCollection.findOne({ _id: taskId, userId: this.userId });
+
+		if(!task) {
+			throw new Meteor.Error('Access denied.');
+		}
+
+		TasksCollection.update(taskId, {
+			$set: {
+				text: nameTask,
+				description: description,
+				isChecked: isChecked,
 			},
 		});
 	},

@@ -242,7 +242,7 @@ button:focus {
 }
 
 
-/* Exclusão da atividade */
+/* Botões das atividades */
 .MuiList-root.tasks {
   list-style-type: none;
   padding-inline-start: 0;
@@ -250,6 +250,15 @@ button:focus {
   padding-right: 1rem;
   margin-block-start: 0;
   margin-block-end: 0;
+}
+
+.MuiButtonBase-root.MuiIconButton-root.editar {
+  margin-right: 1rem;
+}
+
+.MuiList-root.tasks a {
+  font-size: 0;
+  color: rgba(0, 0, 0, 0.54);
 }
 
 
