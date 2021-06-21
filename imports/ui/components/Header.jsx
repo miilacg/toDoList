@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 
 
-export function Header({ createUser, pendingTasksTitle }) {
+export function Header({ createUser, pendingTasksTitle, user }) {
   return (		
 		<header className='app-bar'>
 			<div className='app-header'>
@@ -13,9 +13,15 @@ export function Header({ createUser, pendingTasksTitle }) {
 
 				{ createUser ? ( // Se for a página de login		
 					<Link to={ createUser }>Criar conta</Link>
-				) : ( // Se for qualquer outra página
-					''					
-				)}    
+				) : (
+					user ? ( // Páginas dentro do to do list		
+						<button type="button" className='user' data-toggle="modal" data-target="#modalExemplo">
+              { user.username } 🚪
+            </button>
+					) : ( // Se for qualquer outra página
+						''					
+					)					
+				) }    
 			</div>
 		</header>
 	);

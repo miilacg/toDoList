@@ -16,14 +16,6 @@ body {
   font-size: .875rem;
 }
 
-header {
-  background: #d2edf4;
-  background-image: linear-gradient(to bottom, #d0edf5, #e1e5f0 100%);
-  padding: 1.25rem 4% 1.25rem 3%;
-  position: relative;
-  box-shadow: 0 3px 3px rgba(34, 25, 25, 0.4);
-}
-
 button {
   font-weight: bold;
   font-size: 1rem;
@@ -91,6 +83,20 @@ button:focus {
   width: 0;
   height: 0;
   background: inherit;
+}
+
+
+/* Header */
+header {
+  background: #d2edf4;
+  background-image: linear-gradient(to bottom, #d0edf5, #e1e5f0 100%);
+  padding: 1.25rem 4% 1.25rem 3%;
+  position: relative;
+  box-shadow: 0 3px 3px rgba(34, 25, 25, 0.4);
+}
+
+header button.user {
+  margin: 0;
 }
 
 

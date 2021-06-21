@@ -64,61 +64,53 @@ export const ToDoList = () => {
   
   return(
     <div className='app'>      
-      <Header pendingTasksTitle={ pendingTasksTitle } />     	  
+      <Header pendingTasksTitle={ pendingTasksTitle } user={ user }  />     	  
 
-      <div className='main'>       
-        { user ? (
-          <>         
-            <button type="button" className='user' data-toggle="modal" data-target="#modalExemplo">
-              { user.username } 🚪
-            </button>
+      <div className='main'>            
+        <>   
+          <div className="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h4 className="modal-title">Escolha uma opção</h4>
+                  <button type="button" className="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
 
-            <div className="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
-              <div className="modal-dialog" role="document">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h4 className="modal-title">Escolha uma opção</h4>
-                    <button type="button" className="close" data-dismiss="modal" aria-label="Fechar">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-
-                  <div class="modal-body">
-                    <h5>
-                      <a href="/editUser">Editar usuário</a>
-                    </h5>
-                    <h5 data-dismiss="modal" aria-label="Excluir usuário" onClick={ () => deleteUser(user._id) }>Excluir usuário</h5>
-                    <h5 data-dismiss="modal" aria-label="Sair" onClick={ logout }>Sair</h5>                    
-                  </div>
+                <div class="modal-body">
+                  <h5>
+                    <a href="/editUser">Editar usuário</a>
+                  </h5>
+                  <h5 data-dismiss="modal" aria-label="Excluir usuário" onClick={ () => deleteUser(user._id) }>Excluir usuário</h5>
+                  <h5 data-dismiss="modal" aria-label="Sair" onClick={ logout }>Sair</h5>                    
                 </div>
               </div>
-            </div> 
-
-            <TaskForm />
-
-            <div className='filter'>
-              { <button onClick={ () => setHideCompleted(!hideCompleted) }>
-                { hideCompleted ? 'Show All' : 'Hide Completed' }
-              </button> } 
             </div>
+          </div> 
 
-            { isLoading && <div className='loading'>loading...</div> }
+          <TaskForm />
 
-            <List className='tasks'>
-              { tasks.map(task => (
-                <Task 
-                  key={ task._id } 
-                  task={ task }
-                  user={ user.username }
-                  onCheckboxClick={ toggleChecked }
-                  onDeleteClick={ deleteTask }
-                />
-              )) }
-            </List>
-          </>
-        ) : (
-          ''
-        )}      
+          <div className='filter'>
+            { <button onClick={ () => setHideCompleted(!hideCompleted) }>
+              { hideCompleted ? 'Show All' : 'Hide Completed' }
+            </button> } 
+          </div>
+
+          { isLoading && <div className='loading'>loading...</div> }
+
+          <List className='tasks'>
+            { tasks.map(task => (
+              <Task 
+                key={ task._id } 
+                task={ task }
+                user={ user.username }
+                onCheckboxClick={ toggleChecked }
+                onDeleteClick={ deleteTask }
+              />
+            )) }
+          </List>
+        </>    
       </div>      
     </div>
   );
