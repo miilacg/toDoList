@@ -21,6 +21,8 @@ export const EditTaskForm = () => {
 	const [description, setDescription] = useState('');
 	const [checked, setChecked] = useState(false);	
 
+	const [state, setState] = useState('visualization');
+
 	// Editando o usuario
 	const handleSubmit = e => {
 		e.preventDefault();
@@ -35,38 +37,45 @@ export const EditTaskForm = () => {
 		setChecked(false);
 	};
 
+	const changeState = () => {
+		setState('edition'); 
+  }
 
 	return (
 		<div className='app'>
 			<Header /> 
 
 			<div className='main'>
-				<form onSubmit={ handleSubmit } className='login-form'>
-					<input 
-						type='text'
-						placeholder='Titulo'
-						value={ nameTask }
-						required
-						onChange={ (e) => setNameTask(e.target.value) }
-					/>
-
-					<ListItemIcon>
-						<Checkbox
-							edge="end"
-							onChange={ (e) => setChecked(e.target.checked) }
-							checked={ checked }
+			{ state == 'visualization' ? (
+					<h1 onClick={ changeState }>teste</h1>
+				) : (
+					<form onSubmit={ handleSubmit } className='login-form'>
+						<input 
+							type='text'
+							placeholder='Titulo'
+							value={ nameTask }
+							required
+							onChange={ (e) => setNameTask(e.target.value) }
 						/>
-					</ListItemIcon>
 
-					<input 
-						type='text'
-						placeholder='Descrição'
-						value={ description }
-						onChange={ (e) => setDescription(e.target.value) }
-					/>
+						<ListItemIcon>
+							<Checkbox
+								edge="end"
+								onChange={ (e) => setChecked(e.target.checked) }
+								checked={ checked }
+							/>
+						</ListItemIcon>
 
-					<button type='submit'>Salvar alterações</button>	
-				</form> 
+						<input 
+							type='text'
+							placeholder='Descrição'
+							value={ description }
+							onChange={ (e) => setDescription(e.target.value) }
+						/>
+
+						<button type='submit'>Salvar alterações</button>	
+					</form> 
+				) }
 			</div>
 		</div>
 	);
