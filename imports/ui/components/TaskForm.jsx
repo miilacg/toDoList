@@ -124,7 +124,9 @@ export default function TaskForm() {
 							id="datetime-local"
 							label="Data"
 							type="datetime-local"
+							defaultValue={ date }
 							value={ date }
+							onChange={ (e) => setDate(e.target.value) } 
 							className={ classes.textField }
 							InputLabelProps={{
 								shrink: true,
