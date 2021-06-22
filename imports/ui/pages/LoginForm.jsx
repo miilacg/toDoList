@@ -13,22 +13,19 @@ export const LoginForm = () => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
-	function login() {
-		if (Meteor.user()) {
-			history.push('/toDoList');
-		} else {
-			const error = document.getElementById('error');
-			error.setAttribute("style", "display: flex");
-		} 
-	}
-
 
 	async function submit(e) {
 		e.preventDefault();
 
-		// Autenticar o usuário com as entradas fornecidas
-		Meteor.loginWithPassword(username, password);
-		login();
+		Meteor.loginWithPassword(username, password, function (error) {
+			if(!error){
+				history.push('/toDoList');
+			}
+			else {
+				const error = document.getElementById('error');
+				error.setAttribute("style", "display: flex");
+			}
+		});
 	}
 
 
