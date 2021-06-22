@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data'; //cada vez que os dados mudam por meio de reatividade, o componente será renderizado novamente
 import { useHistory } from "react-router-dom";
-import { List } from '@material-ui/core';
+import { List, Modal } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
 import { TasksCollection } from '../../db/TasksCollection';
 
@@ -24,9 +25,36 @@ function deleteUser(_id) {
   Meteor.call('users.remove', _id);
 }
 
+const useStyles = makeStyles((theme) => ({
+	paper: {
+    position: 'absolute',
+    width: 400,
+		top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: theme.palette.background.paper,
+    border: 'none',
+		borderRadius: '1rem',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(0, 1.5),
+  },
+}));
+
+
 export const ToDoList = () => {
   let history = useHistory();
   
+  const [open, setOpen] = useState(false);
+	const classes = useStyles();
+
+	const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const user = useTracker(() => Meteor.user()); //obtem o usuário autenticado ou nulo
   const [hideCompleted, setHideCompleted] = useState(false);
   const hideCompletedFilter = { isChecked: { $ne: true } }; // o $ é usado para consultas quando envolver comparação de não igual ou igual sim
@@ -64,30 +92,33 @@ export const ToDoList = () => {
   
   return(
     <div className='app'>      
-      <Header pendingTasksTitle={ pendingTasksTitle } user={ user }  />     	  
+      <Header pendingTasksTitle={ pendingTasksTitle } user={ user } handleOpen={ handleOpen } />     	  
 
       <div className='main'>            
         <>   
-          <div className="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
-            <div className="modal-dialog" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h4 className="modal-title">Escolha uma opção</h4>
-                  <button type="button" className="close" data-dismiss="modal" aria-label="Fechar">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
+          <Modal
+            open={ open }
+            onClose={ handleClose }
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+          >
+            <div className={ classes.paper }>    
+              <div className="modal-header">
+                <h4 className="modal-title">Escolha uma opção</h4>
+                <button type="button" className="close" onClick={ handleClose } label="Fechar">
+                  <span>&times;</span>
+                </button>
+              </div>
 
-                <div class="modal-body">
-                  <h5>
-                    <a href="/editUser">Editar usuário</a>
-                  </h5>
-                  <h5 data-dismiss="modal" aria-label="Excluir usuário" onClick={ () => deleteUser(user._id) }>Excluir usuário</h5>
-                  <h5 data-dismiss="modal" aria-label="Sair" onClick={ logout }>Sair</h5>                    
-                </div>
+              <div class="modal-body">
+                <h5>
+                  <a href="/editUser">Editar usuário</a>
+                </h5>
+                <h5 label="Excluir usuário" onClick={ () => deleteUser(user._id) }>Excluir usuário</h5>
+                <h5 label="Sair" onClick={ logout }>Sair</h5>                    
               </div>
             </div>
-          </div> 
+          </Modal>	
 
           <CreateTask />
 

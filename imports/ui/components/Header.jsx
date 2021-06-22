@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
 
 
-export function Header({ createUser, pendingTasksTitle, user }) {
+export function Header({ createUser, pendingTasksTitle, user, handleOpen }) {
   return (		
 		<header className='app-bar'>
 			<div className='app-header'>
@@ -15,9 +16,9 @@ export function Header({ createUser, pendingTasksTitle, user }) {
 					<Link to={ createUser }>Criar conta</Link>
 				) : (
 					user ? ( // Páginas dentro do to do list		
-						<button type="button" className='user' data-toggle="modal" data-target="#modalExemplo">
-              { user.username } 🚪
-            </button>
+						<Button className='user' onClick={ handleOpen }>
+							{ user.username } 🚪
+						</Button>
 					) : ( // Se for qualquer outra página
 						''					
 					)					

@@ -104,6 +104,10 @@ header {
 
 header button.user {
   margin: 0;
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-transform: none;
 }
 
 
@@ -174,20 +178,20 @@ header button.user {
 
   background: transparent;
   color: black;
-  font-weight: bold;
 }
 
 .user:focus {
   outline: none;
 }
 
-.modal-content {
-  margin: 0 auto;
-  width: 80%;
+.modal-header button {
+  box-shadow: none;
 }
 
-#modalExemplo button {
-  box-shadow: none;
+.modal-header button.close {
+  font-size: 1.7rem;
+  display: flex;
+  align-self: center;
 }
 
 .modal-body h5 {
