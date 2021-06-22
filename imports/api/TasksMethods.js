@@ -63,12 +63,13 @@ Meteor.methods ({
 		});
 	},
 	
-	'tasks.edit'(taskId, description, nameTask, isChecked) {
+	'tasks.edit'(taskId, date, description, titleTask, isParticular) {
 		check(taskId, String);
-		check(nameTask, String);
+		check(date, String);
+		check(titleTask, String);
 		check(description, String);
-		check(isChecked, Boolean);
-		
+		check(isParticular, Boolean);
+
 		if (!this.userId) {
 			throw new Meteor.Error('Not authorized.');
 		}
@@ -82,9 +83,10 @@ Meteor.methods ({
 
 		TasksCollection.update(taskId, {
 			$set: {
-				text: nameTask,
+				date: date,
+				titleTask: titleTask,
 				description: description,
-				isChecked: isChecked,
+				isParticular: isParticular,
 			},
 		});
 	},

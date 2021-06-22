@@ -6,9 +6,9 @@ import { List } from '@material-ui/core';
 
 import { TasksCollection } from '../../db/TasksCollection';
 
+import { CreateTask } from '../components/CreateTask';
 import { Header } from '../components/Header';
 import { Task } from '../components/Task';
-import { TaskForm } from '../components/TaskForm';
 
 
 
@@ -89,7 +89,7 @@ export const ToDoList = () => {
             </div>
           </div> 
 
-          <TaskForm />
+          <CreateTask />
 
           <div className='filter'>
             { <button onClick={ () => setHideCompleted(!hideCompleted) }>

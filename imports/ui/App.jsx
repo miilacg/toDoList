@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { CreateUserForm } from './pages/CreateUserForm';
 import { EditUserForm } from './pages/EditUserForm';
-import { EditTaskForm } from './pages/EditTaskForm';
+import { EditTask } from './pages/EditTask';
 import { LoginForm } from './pages/LoginForm';
 import { ToDoList } from './pages/ToDoList';
 
@@ -29,8 +29,8 @@ export default function App() {
 					<ToDoList />
 				</Route>		
 
-				<Route path="/editTask/:ID">
-					<EditTaskForm />
+				<Route path="/editTask/:taskId">
+					<EditTask />
 				</Route>			
 			</Switch>
 		</Router>
