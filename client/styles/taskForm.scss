@@ -1,0 +1,57 @@
+.MuiButtonBase-root.MuiButton-root.MuiButton-text.newTask {
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 auto;
+
+  background: transparent;
+  box-shadow: none;
+
+  color: green;
+  font-size: 1.2rem;
+  text-transform: none;
+}
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-text.newTask:focus {
+	outline: 5px auto rgba(6, 130, 6, 0.713);
+}
+
+.newTask .MuiSvgIcon-root {
+  width: 1.9rem;
+  height: 1.9rem;
+  margin-right: .5rem;
+}
+
+
+// Modal
+h3#titleModalAddTask{
+  text-align: center;
+}
+
+form.task-form {
+  margin: 1rem;
+
+	div.MuiFormControl-root {
+		display: flex;
+	}
+	
+	span.MuiIconButton-label{
+		justify-content: flex-start;
+	}
+	
+	.MuiListItemSecondaryAction-root {
+		left: 2.5rem;
+	}
+	
+	.MuiListItemSecondaryAction-root .MuiListItemText-root {
+		color: rgba(0, 0, 0, 0.54);
+	}
+	
+	// Texto do checked
+	.MuiFormControl-root  .MuiListItemSecondaryAction-root .MuiInputLabel-formControl {
+		top: 0;
+		left: 0;
+		position: absolute;
+		transform: translate(0, -40%) scale(1);
+		margin: 0;
+	}
+}

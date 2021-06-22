@@ -25,7 +25,7 @@ export const Task = ({ task, user, onCheckboxClick, onDeleteClick }) => {
 				/>
       </ListItemIcon>
 
-      <ListItemText id={ task._id } primary={ task.text } secondary={ user }/>
+      <ListItemText id={ task._id } primary={ task.titleTask } secondary={ user }/>
 		
 			<ListItemSecondaryAction>
 				<IconButton className='editar' aria-label="editar tarefa">

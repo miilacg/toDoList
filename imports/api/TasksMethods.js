@@ -4,18 +4,23 @@ import { TasksCollection } from '../db/TasksCollection';
 
 
 Meteor.methods ({
-	'tasks.insert'(text) {
-		check(text, String); // o check é usado apra verificar se o valor recebido é do tipo esperado
+	'tasks.insert'(date, titleTask, description, isParticular) {
+		check(date, String); // o check é usado apra verificar se o valor recebido é do tipo esperado
+		check(titleTask, String);
+		check(description, String);
+		check(isParticular, Boolean);
 
 		if (!this.userId) {
 			throw new Meteor.Error('Not authorized.');
 		}
 
 		TasksCollection.insert({
-			text,
+			date,
+			titleTask,
+			description,
+			isParticular,
 			createdAt: new Date,
 			userId: this.userId,
-			description: ''
 		});
 	},
 

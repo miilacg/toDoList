@@ -77,12 +77,19 @@ button:focus {
   flex-grow: 1;
   overflow: auto;
   background: white;
+  padding: 2rem;
 }
 
 .main::-webkit-scrollbar {
   width: 0;
   height: 0;
   background: inherit;
+}
+
+.main h2 {
+  margin-bottom: 2rem;
+  text-align: center;
+  font-size: 1.9rem;
 }
 
 
@@ -158,7 +165,7 @@ header button.user {
 }
 
 
-/* Modal */
+/* Modal usuario*/
 .user {
   display: flex;
   align-self: flex-end;
@@ -199,38 +206,6 @@ header button.user {
 .user:focus-visible,
 .user:focus {
   outline: none;
-}
-
-
-/* Adicionar nova atividade */
-.task-form {
-  display: flex;
-  margin: 1rem;
-}
-
-.task-form > input {
-  flex-grow: 1;
-  box-sizing: border-box;
-  padding: .625rem 6px;
-  background: transparent;
-  border: 1px solid #aaa;
-  width: 100%;
-  font-size: 1em;
-  margin-right: 1rem;
-}
-
-.task-form > input:focus {
-  outline: 0;
-}
-
-.task-form > button {
-  min-width: 100px;
-  height: 95%;
-  background-color: #315481;
-}
-
-.MuiListItem-container {
-  border-bottom: #eee solid 1px;
 }
 
 
