@@ -1,0 +1,87 @@
+form {
+  margin: 1rem;
+
+	div.MuiFormControl-root {
+		display: flex;
+	}
+
+	.MuiFormLabel-root {
+		font-size: 1.5rem;
+	}
+
+	.MuiInputBase-input {
+    padding: .5rem;
+		margin-top: .5rem;
+	}
+	
+	span.MuiIconButton-label{
+		justify-content: flex-start;
+	}
+	
+	.MuiListItemSecondaryAction-root {
+		left: 2.5rem;
+	}
+	
+	.MuiListItemSecondaryAction-root .MuiListItemText-root {
+		color: rgba(0, 0, 0, 0.54);
+	}
+	
+	// Texto do checked
+	.MuiFormControl-root  .MuiListItemSecondaryAction-root .MuiInputLabel-formControl {
+		top: 0;
+		left: 0;
+		position: absolute;
+		transform: translate(0, -40%) scale(1);
+		margin: 0;
+	}
+}
+
+
+
+/* Formulário de login */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+  height: 100%;
+
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+
+	h1 {
+		margin-bottom: 2.5rem;
+    font-size: 1.95rem;
+    font-weight: bold;
+	}
+
+	.MuiInputBase-root {
+		font-size: 1.15rem;
+	}
+
+	.MuiButton-label {
+		color: white;
+		font-size: 1.45rem;
+		font-family: inherit;
+		font-weight: bold;		
+		text-transform: none; 
+	}
+}
+
+.login-form > div {
+  width: 100%;
+  margin: .5rem;
+}
+
+.login-form > .MuiButton-contained {
+  width: 100%;
+  height: auto;
+  margin-top: 2rem;
+  padding: .5rem;
+  border-radius: .5rem;
+  background-color: black;
+}
+
+.login-form > .MuiButton-contained:hover {
+  background-color: rgb(97, 95, 95);
+}

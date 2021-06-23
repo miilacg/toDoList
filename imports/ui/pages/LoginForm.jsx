@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useHistory } from "react-router-dom";
+import { 
+	Button,
+	TextField	
+} from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 
 import { Header } from '../components/Header';
+
+import '../../../client/styles/forms.scss';
 
 
 
@@ -38,26 +44,26 @@ export const LoginForm = () => {
 					Usuário ou senha incorreto
 				</Alert>	
 
-				<form onSubmit={ submit } className='login-form'>	
+				<form onSubmit={ submit } className='login-form form'>	
 					<h1>Bem vindo ao To Do List</h1>
 
-					<input 
-						type='text'
-						placeholder='Username'
-						name='username'
+					<TextField						
+						type="text"
+						label="Nome"
+						value={ username }				
+						onChange={ (e) => setUsername(e.target.value) }
 						required
-						onChange={ e => setUsername(e.target.value) }
-					/>
-				
-					<input 
-						type='password'
-						placeholder='Password'
-						name='password'
-						required
-						onChange={ e => setPassword(e.target.value) }
 					/>
 
-					<button type='submit'>Entrar</button>				
+					<TextField						
+						type="password"
+						label="Senha"
+						value={ password }				
+						onChange={ (e) => setPassword(e.target.value) }
+						required
+					/>
+
+					<Button type='submit' variant="contained">Entrar</Button>			
 				</form> 
 			</div>
 		</div>
