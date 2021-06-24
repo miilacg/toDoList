@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data'; //cada vez que os dados mudam por meio de reatividade, o componente será renderizado novamente
 import { useHistory } from "react-router-dom";
-import { List, Modal } from '@material-ui/core';
+import { Button, Modal, List } from '@material-ui/core';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { TasksCollection } from '../../db/TasksCollection';
@@ -11,19 +12,9 @@ import { CreateTask } from '../components/CreateTask';
 import { Header } from '../components/Header';
 import { Task } from '../components/Task';
 
+import '../../../client/styles/toDoList.scss';
 
 
-const toggleChecked = ({ _id, isChecked }) => {
-  Meteor.call('tasks.setIsChecked', _id, !isChecked);
-}
-
-const deleteTask = ({ _id }) => {
-  Meteor.call('tasks.remove', _id);
-}
-
-function deleteUser(_id) {
-  Meteor.call('users.remove', _id);
-}
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -40,11 +31,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const toggleChecked = ({ _id, isChecked }) => {
+  Meteor.call('tasks.setIsChecked', _id, !isChecked);
+}
+
+const deleteTask = ({ _id }) => {
+  Meteor.call('tasks.remove', _id);
+}
+
+function deleteUser(_id) {
+  Meteor.call('users.remove', _id);
+}
+
 
 export const ToDoList = () => {
-  let history = useHistory();
-  
+  let history = useHistory();  
   const [open, setOpen] = useState(false);
+  const [openCreateTask, setOpenCreateTask] = useState(false);
 	const classes = useStyles();
 
 	const handleOpen = () => {
@@ -55,10 +58,14 @@ export const ToDoList = () => {
     setOpen(false);
   };
 
+  const handleOpenCreateTask = () => {
+    setOpenCreateTask(true);
+  };
+
   const user = useTracker(() => Meteor.user()); //obtem o usuário autenticado ou nulo
   const [hideCompleted, setHideCompleted] = useState(false);
   const hideCompletedFilter = { isChecked: { $ne: true } }; // o $ é usado para consultas quando envolver comparação de não igual ou igual sim
-  const userFilter = user ? { userId: user._id} : {}; // filtra as tarefas pelo id do usuario
+  const userFilter = user ? { userId: user._id } : {}; // filtra as tarefas pelo id do usuario ou se ela não for particular
   const pendingOnlyFilter = { ...hideCompletedFilter, ...userFilter };  
 
   const { tasks, pendingTasksCount, isLoading } = useTracker(() => {
@@ -69,7 +76,7 @@ export const ToDoList = () => {
 
     const handler = Meteor.subscribe('tasks');
     if (!handler.ready()) {
-      return { ...noDataAvailable, isLoading: true };
+      return { ...noDataAvailable,...noDataAvailable, isLoading: true };
     }
 
     const tasks = TasksCollection.find(
@@ -99,8 +106,6 @@ export const ToDoList = () => {
           <Modal
             open={ open }
             onClose={ handleClose }
-            aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
           >
             <div className={ classes.paper }>    
               <div className="modal-header">
@@ -120,7 +125,11 @@ export const ToDoList = () => {
             </div>
           </Modal>	
 
-          <CreateTask />
+          <Button className='newTask' onClick={ handleOpenCreateTask }>
+            <AddCircleOutlineIcon />	Adicionar nova tarefa
+          </Button>	
+
+          { openCreateTask ? ( <CreateTask setOpenCreateTask={ setOpenCreateTask }/> ) : '' }
 
           <div className='filter'>
             { <button onClick={ () => setHideCompleted(!hideCompleted) }>

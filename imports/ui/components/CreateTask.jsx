@@ -1,10 +1,6 @@
-import React, { useState } from 'react';
-import { 
-	Button,
-	Modal	
-} from '@material-ui/core';
+import React from 'react';
+import { Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 import { TaskForm } from '../components/TaskForm';
 
@@ -29,40 +25,29 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export function CreateTask() {
-	const [open, setOpen] = useState(false);
+export function CreateTask({ setOpenCreateTask }) {
 	const classes = useStyles();
 
-	const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
+	const handleClose = () => {
+    setOpenCreateTask(false);
   };
 
   
-	return (
-		<>	
-			<Button className='newTask' onClick={ handleOpen }>
-				<AddCircleOutlineIcon />	Adicionar nova tarefa
-			</Button>		
+	return (		
+		<Modal
+			open={ setOpenCreateTask }
+			onClose={ handleClose }
+		>
+			<div className={ classes.paper }>
+				<h3 id='titleModalAddTask'>Preencha os campos</h3>
 
-			<Modal
-        open={ open }
-        onClose={ handleClose }
-      >
-        <div className={ classes.paper }>
-					<h3 id='titleModalAddTask'>Preencha os campos</h3>
-
-					<TaskForm 
-						action='create'
-						buttonSubmit='Adicionar tarefa' 
-						buttonExit='Voltar'
-						onClickExit={ handleClose }
-					/>
-				</div>
-      </Modal>			
-		</>		
+				<TaskForm 
+					action='create'
+					buttonSubmit='Adicionar tarefa' 
+					buttonExit='Voltar'
+					onClickExit={ handleClose }
+				/>
+			</div>
+		</Modal>				
 	);
 };

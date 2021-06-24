@@ -1,0 +1,23 @@
+// Botão de adicionar nova tarefa
+.MuiButtonBase-root.MuiButton-root.MuiButton-text.newTask {
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 auto;
+
+  background: transparent;
+  box-shadow: none;
+
+  color: green;
+  font-size: 1.2rem;
+  text-transform: none;
+}
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-text.newTask:focus {
+	outline: 5px auto rgba(6, 130, 6, 0.713);
+}
+
+.newTask .MuiSvgIcon-root {
+  width: 1.9rem;
+  height: 1.9rem;
+  margin-right: .5rem;
+}
