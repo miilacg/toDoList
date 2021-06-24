@@ -1,3 +1,25 @@
+.taskForm {
+  div.MuiFormControl-root {
+    margin-top: 1.5rem;
+  }
+
+  textarea.MuiInputBase-input {
+    margin-top: -0.3rem;
+  }
+
+  label#datetime-local-label + .MuiInput-formControl {
+    margin-right: auto;
+  }
+
+  input[type=datetime-local] {
+    width: auto;
+  } 
+  
+  .buttons {
+    margin-top: 2rem;
+  }
+}
+
 .MuiButtonBase-root.MuiButton-root.MuiButton-text.newTask {
   display: flex;
   align-items: center;
@@ -25,33 +47,4 @@
 // Modal
 h3#titleModalAddTask{
   text-align: center;
-}
-
-form.task-form {
-  margin: 1rem;
-
-	div.MuiFormControl-root {
-		display: flex;
-	}
-	
-	span.MuiIconButton-label{
-		justify-content: flex-start;
-	}
-	
-	.MuiListItemSecondaryAction-root {
-		left: 2.5rem;
-	}
-	
-	.MuiListItemSecondaryAction-root .MuiListItemText-root {
-		color: rgba(0, 0, 0, 0.54);
-	}
-	
-	// Texto do checked
-	.MuiFormControl-root  .MuiListItemSecondaryAction-root .MuiInputLabel-formControl {
-		top: 0;
-		left: 0;
-		position: absolute;
-		transform: translate(0, -40%) scale(1);
-		margin: 0;
-	}
 }

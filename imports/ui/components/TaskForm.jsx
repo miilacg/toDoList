@@ -89,7 +89,7 @@ export function TaskForm({ action, taskId, buttonSubmit, buttonExit, onClickExit
 	
   
 	return (
-		<form className='form' onSubmit={ handleSubmit }>
+		<form className='form taskForm' onSubmit={ handleSubmit }>
 			<TextField						
 				value={ titleTask }
 				label="Tarefa"
@@ -133,7 +133,7 @@ export function TaskForm({ action, taskId, buttonSubmit, buttonExit, onClickExit
 				Escolha uma data superior a data atual
 			</Alert>
 
-			<div>
+			<div className='buttons'>
 				<Button variant="contained" onClick={ () => onClickExit() }>{ buttonExit }</Button>
 				<Button type='submit' variant="contained">{ buttonSubmit }</Button>
 			</div>
