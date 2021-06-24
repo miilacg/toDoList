@@ -19,7 +19,7 @@ import '../../../client/styles/toDoList.scss';
 const useStyles = makeStyles((theme) => ({
 	paper: {
     position: 'absolute',
-    width: 400,
+    width: 'auto',
 		top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
@@ -62,6 +62,11 @@ export const ToDoList = () => {
     setOpenCreateTask(true);
   };
 
+  const logout = () => {
+    history.push('/');
+    Meteor.logout();    
+  }
+
   const user = useTracker(() => Meteor.user()); //obtem o usuário autenticado ou nulo
   const [hideCompleted, setHideCompleted] = useState(false);
   const hideCompletedFilter = { isChecked: { $ne: true } }; // o $ é usado para consultas quando envolver comparação de não igual ou igual sim
@@ -91,11 +96,6 @@ export const ToDoList = () => {
   });
   
   const pendingTasksTitle = `${ pendingTasksCount ? `(${ pendingTasksCount })` : '' }`;  
-
-  const logout = () => {
-    history.push('/');
-    Meteor.logout();    
-  }
   
   return(
     <div className='app'>      

@@ -21,3 +21,37 @@
   height: 1.9rem;
   margin-right: .5rem;
 }
+
+
+// Modal do usuario
+.modal-header {
+  .modal-title {
+    margin-right: 5rem;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: rgba(16, 17, 21, 0.768);
+  }
+  
+  button.close {
+    display: flex;
+    align-self: center;
+
+    font-size: 1.9rem;
+  }
+}
+
+.modal-body {
+  h5 {
+    font-size: 1.45rem;
+    font-weight: normal;
+    line-height: 2;
+  }
+
+  h5 a {
+    color: black;
+  }
+
+  h5 a:hover {
+    text-decoration: none;
+  }
+}
