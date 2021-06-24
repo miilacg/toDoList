@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Meteor } from 'meteor/meteor';
 import { 
 	Button,
 	Modal	
@@ -9,14 +8,14 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 import { TaskForm } from '../components/TaskForm';
 
-import '../../../client/styles/taskForm.scss';
+import '../../../client/styles/task.scss';
 
 
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
     position: 'absolute',
-    width: 400,
+    width: 'auto',
 		top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
@@ -24,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     border: 'none',
 		borderRadius: '1rem',
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(3),
+    padding: theme.spacing(3, 3, 1),
   },
 }));
 
@@ -52,8 +51,6 @@ export function CreateTask() {
 			<Modal
         open={ open }
         onClose={ handleClose }
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
       >
         <div className={ classes.paper }>
 					<h3 id='titleModalAddTask'>Preencha os campos</h3>

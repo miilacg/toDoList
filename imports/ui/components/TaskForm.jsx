@@ -12,7 +12,7 @@ import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 
 import '../../../client/styles/forms.scss';
-
+import '../../../client/styles/task.scss';
 
 
 
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 		'& .MuiTextField-root': {
       margin: theme.spacing(1),
-      width: '25ch',
+      width: '25ch'
     },
 	},
 

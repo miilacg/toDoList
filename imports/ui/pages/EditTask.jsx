@@ -16,7 +16,7 @@ import { TasksCollection } from '../../db/TasksCollection';
 import { Header } from '../components/Header';
 import { TaskForm } from '../components/TaskForm';
 
-import '../../../client/styles/editTask';
+import '../../../client/styles/task';
 
 
 

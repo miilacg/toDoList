@@ -1,0 +1,168 @@
+.buttons {
+  display: flex;
+  justify-content: center;
+
+  .MuiButton-contained {
+    margin: .5rem;
+    padding: 1.3rem 1rem;
+    background-color: #00438c;
+
+    color: white;
+
+    a {
+      color: white;
+    }
+
+    a:hover {
+      color: white;
+      text-decoration: none;
+    }
+
+    .MuiButton-label {
+      font-size: 1.1rem;
+      line-height: 0;
+      font-family: inherit;
+      font-weight: bold;		
+      text-transform: none;
+    }
+  }
+
+  .MuiButton-contained:hover {
+    background-color: #086ede;
+  }
+}
+
+
+// Task Form
+.taskForm {
+  div.MuiFormControl-root {
+    margin-top: 1.5rem;
+  }   
+
+  .MuiInputBase-multiline {
+    padding: 6px 0 4px;
+  }
+
+  label#datetime-local-label + .MuiInput-formControl {
+    margin-right: auto;
+  }
+
+  input[type=datetime-local] {
+    width: auto;
+  } 
+
+  .error {
+    width: 100%;
+    margin: 1.5rem auto;
+    margin-bottom: -.3rem;
+    padding: .5rem 1.5rem;
+
+    .MuiAlert-icon {
+      font-size: 2.2rem;
+    }
+
+    .MuiAlert-message {
+      font-size: 1.2rem;
+    }
+  }
+  
+  .buttons {
+    margin-top: 2rem;
+  }
+}
+
+
+// Create Task
+.MuiButtonBase-root.MuiButton-root.MuiButton-text.newTask {
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 auto;
+
+  background: transparent;
+  box-shadow: none;
+
+  color: green;
+  font-size: 1.2rem;
+  text-transform: none;
+}
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-text.newTask:focus {
+	outline: 5px auto rgba(6, 130, 6, 0.713);
+}
+
+.newTask .MuiSvgIcon-root {
+  width: 1.9rem;
+  height: 1.9rem;
+  margin-right: .5rem;
+}
+
+h3#titleModalAddTask{
+  text-align: center;
+  font-size: 2.3rem;
+  margin-bottom: 2.5rem;
+}
+
+
+// Edit task
+.editTask.main {
+  h2 {
+    margin: 1rem auto 2rem;
+		text-align: center;
+		font-size: 2.8rem;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+
+  .information {
+    margin: 3rem 4rem 2rem;
+  
+    h5 {
+      margin-bottom: .8rem;
+      font-family: inherit;
+      font-weight: normal;
+  
+      span {
+        font-size: 1.4rem;
+        font-weight: bold;
+      }
+    }
+
+    .form {
+      margin-top: 0;
+    }
+  
+    div.MuiFormControl-root:first-child {
+      margin-top: 0;
+    }
+  
+    div.MuiFormControl-root {
+      display: flex;
+  
+      .PrivateSwitchBase-root-1 {
+        padding: 0 9px;
+      }
+  
+      .MuiFormLabel-root {
+        font-size: 1.25rem;
+      }
+  
+      span.MuiIconButton-label{
+        justify-content: flex-start;
+      }
+      
+      .MuiListItemSecondaryAction-root {
+        left: 2.5rem;
+      }
+    }
+  
+    // Texto do checked
+    .MuiFormControl-root  .MuiListItemSecondaryAction-root .MuiInputLabel-formControl {		
+      top: 0;
+      left: 0;
+      position: absolute;
+      transform: translate(0, -40%) scale(1);
+      margin: 0;
+      color: rgb(33, 37, 41);
+    }
+  }
+}
