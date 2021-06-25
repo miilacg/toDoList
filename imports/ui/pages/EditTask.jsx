@@ -13,6 +13,8 @@ import {
 
 import { TasksCollection } from '../../db/TasksCollection';
 
+import { useCurrentDate } from '../../hooks/useCurrentDate';
+
 import { Header } from '../components/Header';
 import { TaskForm } from '../components/TaskForm';
 
@@ -48,12 +50,7 @@ export const EditTask = () => {
     return { task, user };
   });
 
-	let date = new Date(task.date);
-	const day = String(date.getDate()).padStart(2, '0');
-	const month = String(date.getMonth() + 1).padStart(2, '0');
-	const year = date.getFullYear();
-	const hour = date.getHours();
-	const minute = String(date.getMinutes()).padStart(2, '0');
+	const { year, month, day, hour, minute } = useCurrentDate(task.date);
 	date = day + '/' + month + '/' + year + ' - ' + hour + ':' + minute;
 
 
@@ -69,7 +66,7 @@ export const EditTask = () => {
 						<>
 							<h2>{ task.titleTask }</h2>
 
-							<div class="information">
+							<div className="information">
 								<h5><span>Responsavel pela tarefa: </span>{ user.username }</h5>
 								<h5><span>Data da tarefa: </span>{ date }</h5>
 								<h5><span>Situação: </span></h5>
@@ -101,7 +98,7 @@ export const EditTask = () => {
 						<>
 							<h2>editar tarefa: { task.titleTask }</h2>
 
-							<div class="information">
+							<div className="information">
 								<TaskForm 
 									taskId={ taskId } 
 									action='edition'
