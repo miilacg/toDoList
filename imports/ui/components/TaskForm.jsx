@@ -11,6 +11,8 @@ import {
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { useCurrentDate } from '../../hooks/useCurrentDate';
+
 import '../../../client/styles/forms.scss';
 import '../../../client/styles/task.scss';
 
@@ -43,14 +45,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function TaskForm({ action, taskId, buttonSubmit, buttonExit, onClickExit }) {
-	let currentDate = new Date();
-	const tempCurrentDate = currentDate.getTime();
-	const day = String(currentDate.getDate()).padStart(2, '0');
-	const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-	const year = currentDate.getFullYear();
-	const hour = currentDate.getHours();
-	const minute = String(currentDate.getMinutes()).padStart(2, '0');
-	currentDate = year + '-' + month + '-' + day + 'T' + hour + ':' + minute;
+	const { tempCurrentDate, year, month, day, hour, minute } = useCurrentDate();	
+	const currentDate = year + '-' + month + '-' + day + 'T' + hour + ':' + minute;
 
 	const [date, setDate] = useState(currentDate);
 	const [titleTask, setTitleTask] = useState('');
@@ -84,6 +80,7 @@ export function TaskForm({ action, taskId, buttonSubmit, buttonExit, onClickExit
 		setTitleTask('');
 		setDescription('');
 		setIsParticular(false);
+		onClickExit();
 	};
 	
   

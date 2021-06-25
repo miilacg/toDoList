@@ -11,6 +11,8 @@ import {
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 
+import { useCurrentDate } from '../../hooks/useCurrentDate';
+
 import { Header } from '../components/Header';
 
 import '../../../client/styles/forms.scss';
@@ -19,14 +21,9 @@ import '../../../client/styles/user.scss';
 
 
 export const EditUser = () => {
-	let currentDate = new Date();
-	const tempCurrentDate = currentDate.getTime();
-	const day = String(currentDate.getDate()).padStart(2, '0');
-	const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-	const year = currentDate.getFullYear();
-	const hour = currentDate.getHours();
-	const minute = String(currentDate.getMinutes()).padStart(2, '0');
-	currentDate = year + '-' + month + '-' + day + 'T' + hour + ':' + minute;
+	//const user = Meteor.users.findOne({ _id: this.userId });
+	const { tempCurrentDate, year, month, day, hour, minute } = useCurrentDate();	
+	const currentDate = year + '-' + month + '-' + day + 'T' + hour + ':' + minute;
 
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
