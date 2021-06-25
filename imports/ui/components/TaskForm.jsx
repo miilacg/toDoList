@@ -59,7 +59,6 @@ export function TaskForm({ action, taskId, buttonSubmit, buttonExit, onClickExit
 
 	const classes = useStyles();
 
-	// Editando o usuario
 	const handleSubmit = e => {
 		e.preventDefault();
 

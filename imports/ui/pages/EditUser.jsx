@@ -18,7 +18,7 @@ import '../../../client/styles/user.scss';
 
 
 
-export const EditUserForm = () => {
+export const EditUser = () => {
 	let currentDate = new Date();
 	const tempCurrentDate = currentDate.getTime();
 	const day = String(currentDate.getDate()).padStart(2, '0');

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data'; //cada vez que os dados mudam por meio de reatividade, o componente será renderizado novamente
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { Button, Modal, List } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { makeStyles } from '@material-ui/core/styles';
@@ -117,7 +117,7 @@ export const ToDoList = () => {
 
               <div class="modal-body">
                 <h5>
-                  <a href="/editUser">Editar usuário</a>
+                  <Link to="/editUser">Editar usuário</Link>
                 </h5>
                 <h5 label="Excluir usuário" onClick={ () => deleteUser(user._id) }>Excluir usuário</h5>
                 <h5 label="Sair" onClick={ logout }>Sair</h5>                    
