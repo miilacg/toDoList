@@ -39,7 +39,7 @@ Meteor.methods ({
 				Meteor.users.update({ _id: this.userId }, {
 					$set: {
 						username: username,
-						emails: email,
+						email: email,
 						date: date,
 						gender: gender,
 						company: company, 
@@ -47,12 +47,12 @@ Meteor.methods ({
 				});
 				Accounts.setPassword(this.userId, password);
 			} else {
-				throw new Meteor.Error('Usuario já existe');
+				throw new Meteor.Error('Usuário já existe');
 			}	
 		} else { // se o username for igual ao user não precisa alterar			
 			Meteor.users.update({ _id: this.userId }, {
 				$set: {
-					emails: email,
+					email: email,
 					date: date,
 					gender: gender,
 					company: company, 

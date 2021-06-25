@@ -21,7 +21,6 @@ import '../../../client/styles/user.scss';
 
 
 export const EditUser = () => {
-	//const user = Meteor.users.findOne({ _id: this.userId });
 	const { tempCurrentDate, year, month, day, hour, minute } = useCurrentDate();	
 	const currentDate = year + '-' + month + '-' + day + 'T' + hour + ':' + minute;
 
@@ -48,7 +47,7 @@ export const EditUser = () => {
 
 
 		Meteor.call('users.edit', username, password, email, date, gender, company, function (error) {
-			if(error) {
+			if(error && error.error === 'Usuário já existe') {				
 				const errorUsuario = document.getElementById('errorUsuario');
 				errorUsuario.setAttribute("style", "display: flex");
 			} else {
