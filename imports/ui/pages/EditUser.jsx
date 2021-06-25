@@ -49,7 +49,17 @@ export const EditUserForm = () => {
 			return;
 		}
 
-		Meteor.call('users.edit', username, password, email, date, gender, company);
+
+		Meteor.call('users.edit', username, password, email, date, gender, company, function (error) {
+			if(error) {
+				const errorUsuario = document.getElementById('errorUsuario');
+				errorUsuario.setAttribute("style", "display: flex");
+			} else {
+				const errorUsuario = document.getElementById('errorUsuario');
+				errorUsuario.setAttribute("style", "display: none");
+			}
+		})
+	
 
 		setUsername('');
 		setPassword('');
@@ -134,6 +144,10 @@ export const EditUserForm = () => {
 
 					<Alert id='error' className='error' style={{ display:'none' }} severity="error">
 						Escolha uma data inferior a data atual
+					</Alert>
+
+					<Alert id='errorUsuario' className='error' style={{ display:'none' }} severity="error">
+						Usuário já existe
 					</Alert>
 
 					<div className='buttons'>	

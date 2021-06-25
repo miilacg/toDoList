@@ -20,33 +20,45 @@ Meteor.methods ({
 		}
 	},
 	
-	'users.edit'(username, password) {
+	'users.edit'(username, password, email, date, gender, company) {
 		check(username, String);
 		check(password, String);
-
-		const user = Meteor.users.findOne({ _id: this.userId });
+		check(email, String);
+		check(date, String);
+		check(gender, String);
+		check(company, String);		
 
 		if (!this.userId) {
 			throw new Meteor.Error('Not authorized.');
 		}
+
+		const user = Meteor.users.findOne({ _id: this.userId });
 
 		if(user.username != username){
 			if(!Accounts.findUserByUsername(username)) {
 				Meteor.users.update({ _id: this.userId }, {
 					$set: {
 						username: username,
-						password: password, 
+						emails: email,
+						date: date,
+						gender: gender,
+						company: company, 
 					},
 				});
+				Accounts.setPassword(this.userId, password);
 			} else {
 				throw new Meteor.Error('Usuario já existe');
 			}	
-		} else { // se o username for igual ao user não precisa alterar
+		} else { // se o username for igual ao user não precisa alterar			
 			Meteor.users.update({ _id: this.userId }, {
 				$set: {
-					password: password, 
+					emails: email,
+					date: date,
+					gender: gender,
+					company: company, 
 				},
 			});
+			Accounts.setPassword(this.userId, password);
 		}			
 	},
 	
@@ -58,6 +70,6 @@ Meteor.methods ({
 		}
 
 		Meteor.users.remove({ _id: userId });
-		TasksCollection.remove({ userId: userId});
+		TasksCollection.remove({ userId: userId });
 	}
 })

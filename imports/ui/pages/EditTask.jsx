@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { useParams, useHistory } from "react-router-dom";
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data'; 
-import { useParams } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import { 
 	Checkbox, 
@@ -21,8 +21,9 @@ import '../../../client/styles/task';
 
 
 export const EditTask = () => {	
-	const [state, setState] = useState(true); // true é para visualização
 	let { taskId } = useParams();
+
+	const [state, setState] = useState(true); // true é para visualização
 	
 	const changeState = () => {
 		setState(!state);
@@ -37,12 +38,12 @@ export const EditTask = () => {
       return { ...noDataAvailable, isLoading: true };
     }
 		
-		const task = TasksCollection.findOne({ _id: taskId });		
 		let user = Meteor.user();
-
 		if(!Meteor.user()){
 			return { ...noDataAvailable, isLoading: true };
-		} 		
+		}
+
+		const task = TasksCollection.findOne({ _id: taskId, userId: user._id });	
 		
     return { task, user };
   });

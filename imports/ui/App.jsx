@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { CreateUserForm } from './pages/CreateUserForm';
-import { EditUserForm } from './pages/EditUserForm';
+import { EditUser } from './pages/EditUser';
 import { EditTask } from './pages/EditTask';
 import { LoginForm } from './pages/LoginForm';
 import { ToDoList } from './pages/ToDoList';
@@ -22,7 +22,7 @@ export default function App() {
 				</Route>
 
 				<Route path="/editUser">
-					<EditUserForm />
+					<EditUser />
 				</Route>		
 
 				<Route path="/toDoList">
