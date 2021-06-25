@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data'; //cada vez que os dados mudam por meio de reatividade, o componente será renderizado novamente
-import { useHistory, Link } from "react-router-dom";
-import { Button, Modal, List } from '@material-ui/core';
+import { useHistory } from "react-router-dom";
+import { Button, List } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import { makeStyles } from '@material-ui/core/styles';
 
 import { TasksCollection } from '../../db/TasksCollection';
 
@@ -16,21 +15,6 @@ import '../../../client/styles/toDoList.scss';
 
 
 
-const useStyles = makeStyles((theme) => ({
-	paper: {
-    position: 'absolute',
-    width: 'auto',
-		top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    backgroundColor: theme.palette.background.paper,
-    border: 'none',
-		borderRadius: '1rem',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(0, 1.5),
-  },
-}));
-
 const toggleChecked = ({ _id, isChecked }) => {
   Meteor.call('tasks.setIsChecked', _id, !isChecked);
 }
@@ -39,35 +23,17 @@ const deleteTask = ({ _id }) => {
   Meteor.call('tasks.remove', _id);
 }
 
-function deleteUser(_id) {
-  Meteor.call('users.remove', _id);
-}
-
 
 export const ToDoList = () => {
   let history = useHistory();  
-  const [open, setOpen] = useState(false);
   const [openCreateTask, setOpenCreateTask] = useState(false);
-	const classes = useStyles();
 
-	const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleOpenCreateTask = () => {
+	const handleOpenCreateTask = () => {
     setOpenCreateTask(true);
   };
 
-  const logout = () => {
-    history.push('/');
-    Meteor.logout();    
-  }
-
   const user = useTracker(() => Meteor.user()); //obtem o usuário autenticado ou nulo
+
   const [hideCompleted, setHideCompleted] = useState(false);
   const hideCompletedFilter = { isChecked: { $ne: true } }; // o $ é usado para consultas quando envolver comparação de não igual ou igual sim
   const userFilter = user ? { userId: user._id } : {}; // filtra as tarefas pelo id do usuario ou se ela não for particular
@@ -81,7 +47,7 @@ export const ToDoList = () => {
 
     const handler = Meteor.subscribe('tasks');
     if (!handler.ready()) {
-      return { ...noDataAvailable,...noDataAvailable, isLoading: true };
+      return { ...noDataAvailable, isLoading: true };
     }
 
     const tasks = TasksCollection.find(
@@ -98,60 +64,44 @@ export const ToDoList = () => {
   const pendingTasksTitle = `${ pendingTasksCount ? `(${ pendingTasksCount })` : '' }`;  
   
   return(
-    <div className='app'>      
-      <Header pendingTasksTitle={ pendingTasksTitle } user={ user } handleOpen={ handleOpen } />     	  
+    <div className='app'>   
+      { user ? (
+        <>
+          <Header pendingTasksTitle={ pendingTasksTitle } user={ user } />     	  
 
-      <div className='main'>            
-        <>   
-          <Modal
-            open={ open }
-            onClose={ handleClose }
-          >
-            <div className={ classes.paper }>    
-              <div className="modal-header">
-                <h4 className="modal-title">Escolha uma opção</h4>
-                <button type="button" className="close" onClick={ handleClose } label="Fechar">
-                  <span>&times;</span>
-                </button>
+          <div className='main'>            
+            <>   
+              <Button className='newTask' onClick={ handleOpenCreateTask }>
+                <AddCircleOutlineIcon />	Adicionar nova tarefa
+              </Button>	
+
+              { openCreateTask ? ( <CreateTask setOpenCreateTask={ setOpenCreateTask }/> ) : '' }
+
+              <div className='filter'>
+                { <button onClick={ () => setHideCompleted(!hideCompleted) }>
+                  { hideCompleted ? 'Show All' : 'Hide Completed' }
+                </button> } 
               </div>
 
-              <div class="modal-body">
-                <h5>
-                  <Link to="/editUser">Editar usuário</Link>
-                </h5>
-                <h5 label="Excluir usuário" onClick={ () => deleteUser(user._id) }>Excluir usuário</h5>
-                <h5 label="Sair" onClick={ logout }>Sair</h5>                    
-              </div>
-            </div>
-          </Modal>	
+              { isLoading && <div className='loading'>loading...</div> }
 
-          <Button className='newTask' onClick={ handleOpenCreateTask }>
-            <AddCircleOutlineIcon />	Adicionar nova tarefa
-          </Button>	
-
-          { openCreateTask ? ( <CreateTask setOpenCreateTask={ setOpenCreateTask }/> ) : '' }
-
-          <div className='filter'>
-            { <button onClick={ () => setHideCompleted(!hideCompleted) }>
-              { hideCompleted ? 'Show All' : 'Hide Completed' }
-            </button> } 
+              <List className='tasks'>
+                { tasks.map(task => (
+                  <Task 
+                    key={ task._id } 
+                    task={ task }
+                    user={ user.username }
+                    onCheckboxClick={ toggleChecked }
+                    onDeleteClick={ deleteTask }
+                  />
+                )) }
+              </List>
+            </>    
           </div>
-
-          { isLoading && <div className='loading'>loading...</div> }
-
-          <List className='tasks'>
-            { tasks.map(task => (
-              <Task 
-                key={ task._id } 
-                task={ task }
-                user={ user.username }
-                onCheckboxClick={ toggleChecked }
-                onDeleteClick={ deleteTask }
-              />
-            )) }
-          </List>
-        </>    
-      </div>      
+        </>
+      ) : (
+        <div className='loading'>loading...</div>
+      ) }      
     </div>
   );
 };
