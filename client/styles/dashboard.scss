@@ -1,17 +1,13 @@
 .main.dashboard {
 	padding: 2rem 5rem;
 
-	h2 {
-		margin-bottom: 4rem;
-	}
-
 	.cards {
 		display: flex;
 		
 		.card {
 			width: 50%;
 			padding: 2rem 2.5rem;
-			margin: 2rem;
+			margin: 1.5rem 2rem;
 		}
 
 		h3 {
@@ -25,6 +21,31 @@
 		h5 {
 			margin-bottom: 2.65rem;
 			font-size: 1.75rem;
+		}
+	}
+
+	.cards.buttons {
+		.card {
+			padding: 0;
+		}
+
+		button {
+			padding: 2rem 2.5rem;
+			background-color: transparent;
+
+			h5 {
+				margin: auto;
+				color: black;
+
+				a {
+					color: black;
+				}
+
+				a:hover {
+					color: black;
+					text-decoration: none;
+				}
+			}
 		}
 	}
 }
