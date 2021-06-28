@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
-import { useParams, useHistory } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
-import { useTracker } from 'meteor/react-meteor-data'; 
-import { Link } from 'react-router-dom';
+import { useTracker } from 'meteor/react-meteor-data';
+
 import { 
+	Button,
 	Checkbox, 
 	FormControl,
-	ListItemSecondaryAction,
+	FormControlLabel,
 	InputLabel,
-	Button
+	ListItemSecondaryAction,
+	Radio,
+	RadioGroup	
 } from '@material-ui/core';
 
 import { TasksCollection } from '../../db/TasksCollection';
@@ -26,11 +29,11 @@ export const EditTask = () => {
 	let { taskId } = useParams();
 
 	const [state, setState] = useState(true); // true é para visualização
+	const [situation, setSituation] = useState('');
 	
 	const changeState = () => {
 		setState(!state);
 	}
-
   
 	const { task, user, isLoading } = useTracker(() => {
 		const noDataAvailable = { task: [] };
@@ -45,13 +48,47 @@ export const EditTask = () => {
 			return { ...noDataAvailable, isLoading: true };
 		}
 
-		const task = TasksCollection.findOne({ _id: taskId, userId: user._id });	
-		
+		const task = TasksCollection.findOne({ _id: taskId, userId: user._id });
+
     return { task, user };
   });
 
+
+	useEffect(() => {
+		setSituation(task.situation);
+	}, [task.situation]);
+	
+
 	const { year, month, day, hour, minute } = useCurrentDate(task.date);
 	date = day + '/' + month + '/' + year + ' - ' + hour + ':' + minute;
+	
+
+	useEffect(() => {
+    if(situation == 'Cadastrada') {
+			const progress = document.getElementById('inProgress');
+			const completed = document.getElementById('completed');
+			progress.removeAttribute('disabled');
+			completed.setAttribute('disabled', 'disabled');
+		}
+
+		if(situation == 'Concluida') {
+			const progress = document.getElementById('inProgress');
+			const registered = document.getElementById('registered');
+			registered.removeAttribute('disabled');
+			progress.setAttribute('disabled', 'disabled');
+		}
+
+		if(situation == 'Em andamento') {
+			const registered = document.getElementById('registered');
+			const completed = document.getElementById('completed');
+			registered.removeAttribute('disabled');
+			completed.removeAttribute('disabled');
+		}
+	}, [situation]);
+
+	async function handleSubmit(e) {
+		e.preventDefault();		
+	};
 
 
 	return (			
@@ -67,27 +104,29 @@ export const EditTask = () => {
 							<h2>{ task.titleTask }</h2>
 
 							<div className="information">
-								<h5><span>Responsavel pela tarefa: </span>{ user.username }</h5>
-								<h5><span>Data da tarefa: </span>{ date }</h5>
-								<h5><span>Situação: </span></h5>
+								<h5><span>{ task.isParticular && 'Tarefa particular' } </span></h5>
+								<h5><span>Responsável pela tarefa: </span>{ user.username }</h5>
+								<h5><span>Data da tarefa: </span>{ date }</h5>													
+
 								{ task.description ? <h5><span>Descrição: </span>{ task.description }</h5> : '' }
 
-								<FormControl>							
-									<Checkbox 
-										edge="start"
-										checked={ !!task.isParticular }
-										disable
-									/>
-									<ListItemSecondaryAction>
-										<InputLabel>Tarefa particular</InputLabel>
-										{/*<ListItemText primary='Atividade particular' />*/}
-									</ListItemSecondaryAction>	
-								</FormControl>
+								<h5><span>Situação: </span>{ task.situation }</h5>
+
+								<form className='form taskForm' onSubmit={ handleSubmit }>
+									<FormControl className='radio'>
+										<RadioGroup row aria-label="Situação" name="situation" value={ situation } onChange={ (e) => setSituation(e.target.value) }>
+											<FormControlLabel className='registered' id='controlRegistered' value="Cadastrada" control={<Radio id='registered' />} label="Cadastrada" />
+											<FormControlLabel className='inProgress' value="Em andamento" control={<Radio id='inProgress' />} label="Em andamento" />
+											<FormControlLabel className='completed' value="Concluida" control={<Radio id='completed' />} label="Concluida" />
+										</RadioGroup>
+									</FormControl>
+								</form>									
 							</div>
 
 							<div className='buttons'>
 								<Button variant="contained"><Link to='/toDoList'>Voltar</Link></Button>
-								<Button type='submit' variant="contained" onClick={ changeState }>Editar tarefa</Button>
+								<Button type='submit' variant="contained">Salvar status</Button>
+								<Button type='button' variant="contained" onClick={ changeState }>Editar tarefa</Button>
 							</div>	
 						</>
 					)				
@@ -102,6 +141,11 @@ export const EditTask = () => {
 								<TaskForm 
 									taskId={ taskId } 
 									action='edition'
+									dateSelect={ task.date }
+									titleSelect={ task.titleTask }
+									descriptionSelected={ task.description }
+									situationSelected={ task.situation }
+									particularSelected={ task.isParticular }
 									buttonSubmit='Salvar alterações' 
 									buttonExit='Voltar'
 									onClickExit={ changeState }

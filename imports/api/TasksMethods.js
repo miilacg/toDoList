@@ -18,6 +18,7 @@ Meteor.methods ({
 			date,
 			titleTask,
 			description,
+			situation: 'Cadastrada',
 			isParticular,
 			createdAt: new Date,
 			userId: this.userId,
@@ -63,11 +64,12 @@ Meteor.methods ({
 		});
 	},
 	
-	'tasks.edit'(taskId, date, description, titleTask, isParticular) {
+	'tasks.edit'(taskId, date, description, situation, titleTask, isParticular) {
 		check(taskId, String);
 		check(date, String);
 		check(titleTask, String);
 		check(description, String);
+		check(situation, String);
 		check(isParticular, Boolean);
 
 		if (!this.userId) {
@@ -86,6 +88,7 @@ Meteor.methods ({
 				date: date,
 				titleTask: titleTask,
 				description: description,
+				situation: situation,
 				isParticular: isParticular,
 			},
 		});
