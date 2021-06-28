@@ -1,0 +1,30 @@
+.main.dashboard {
+	padding: 2rem 5rem;
+
+	h2 {
+		margin-bottom: 4rem;
+	}
+
+	.cards {
+		display: flex;
+		
+		.card {
+			width: 50%;
+			padding: 2rem 2.5rem;
+			margin: 2rem;
+		}
+
+		h3 {
+			margin: auto 0 0;
+			text-align: end;
+			font-size: 5.5rem;
+			font-weight: bold;
+			line-height: 1;
+		}
+
+		h5 {
+			margin-bottom: 2.65rem;
+			font-size: 1.75rem;
+		}
+	}
+}
