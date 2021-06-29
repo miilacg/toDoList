@@ -42,9 +42,9 @@ Meteor.methods ({
 		TasksCollection.remove(taskId);
 	},
 
-	'tasks.setIsChecked'(taskId, isChecked) {
+	'tasks.setSituation'(taskId, situation) {
 		check(taskId, String);
-		check(isChecked, Boolean);
+		check(situation, String);
 
 		if (!this.userId) {
 			throw new Meteor.Error('Not authorized.');
@@ -59,7 +59,7 @@ Meteor.methods ({
 
 		TasksCollection.update(taskId, {
 			$set: {
-				isChecked
+				situation
 			},
 		});
 	},

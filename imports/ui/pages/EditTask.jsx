@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 
 import { 
 	Button,
-	Checkbox, 
 	FormControl,
 	FormControlLabel,
-	InputLabel,
-	ListItemSecondaryAction,
 	Radio,
 	RadioGroup	
 } from '@material-ui/core';
@@ -27,6 +24,7 @@ import '../../../client/styles/task';
 
 export const EditTask = () => {	
 	let { taskId } = useParams();
+	const history = useHistory();
 
 	const [state, setState] = useState(true); // true é para visualização
 	const [situation, setSituation] = useState('');
@@ -48,16 +46,18 @@ export const EditTask = () => {
 			return { ...noDataAvailable, isLoading: true };
 		}
 
-		const task = TasksCollection.findOne({ _id: taskId, userId: user._id });
-
+		const task = TasksCollection.findOne({ _id: taskId });
+		if(!task){
+			return { ...noDataAvailable, isLoading: true };
+		}
+		
     return { task, user };
-  });
-
+  });	
 
 	useEffect(() => {
 		setSituation(task.situation);
 	}, [task.situation]);
-	
+
 
 	const { year, month, day, hour, minute } = useCurrentDate(task.date);
 	date = day + '/' + month + '/' + year + ' - ' + hour + ':' + minute;
@@ -86,8 +86,17 @@ export const EditTask = () => {
 		}
 	}, [situation]);
 
-	async function handleSubmit(e) {
+
+	function handleSubmit(e) {
 		e.preventDefault();		
+
+		if(!situation) return;
+
+		Meteor.call('tasks.setSituation', taskId, situation, function (error) {
+			if(!error) {				
+				history.push('/toDoList');
+			}
+		})
 	};
 
 
@@ -105,7 +114,7 @@ export const EditTask = () => {
 
 							<div className="information">
 								<h5><span>{ task.isParticular && 'Tarefa particular' } </span></h5>
-								<h5><span>Responsável pela tarefa: </span>{ user.username }</h5>
+								<h5><span>Responsável pela tarefa: </span>{  }</h5>
 								<h5><span>Data da tarefa: </span>{ date }</h5>													
 
 								{ task.description ? <h5><span>Descrição: </span>{ task.description }</h5> : '' }
@@ -120,14 +129,14 @@ export const EditTask = () => {
 											<FormControlLabel className='completed' value="Concluida" control={<Radio id='completed' />} label="Concluida" />
 										</RadioGroup>
 									</FormControl>
-								</form>									
-							</div>
 
-							<div className='buttons'>
-								<Button variant="contained"><Link to='/toDoList'>Voltar</Link></Button>
-								<Button type='submit' variant="contained">Salvar status</Button>
-								<Button type='button' variant="contained" onClick={ changeState }>Editar tarefa</Button>
-							</div>	
+									<div className='buttons'>
+										<Button variant="contained"><Link to='/toDoList'>Voltar</Link></Button>
+										<Button type='submit' variant="contained">Salvar status</Button>
+										<Button type='button' variant="contained" onClick={ changeState }>Editar tarefa</Button>
+									</div>		
+								</form>									
+							</div>							
 						</>
 					)				
 				) : (
