@@ -8,11 +8,13 @@ form {
 	}
 
 	.MuiFormLabel-root {
-		font-size: 1.5rem;
+		margin-left: .25rem;
+		padding-left: .6rem;
+		font-size: 1.45rem;
 	}
 
 	.MuiFormLabel-root.Mui-focused {
-		color: rgba(0, 0, 0, 0.54);
+		color: var(--textLabel);
 	}
 
 	.MuiInputBase-input {
@@ -36,7 +38,7 @@ form {
 		}
 
 		span.MuiFormControlLabel-label { // Label de cada opção
-			color: rgba(0, 0, 0, 0.54);
+			color: var(--textLabel);
 			font-size: 1.03rem;
 		}
 
@@ -45,11 +47,11 @@ form {
 		}
 
 		.registered .MuiRadio-colorSecondary.Mui-checked {
-			color: gray;
+			color: var(--checkedRegistred);
 		}
 
 		.inProgress .MuiRadio-colorSecondary.Mui-checked {
-			color: #e6e600;
+			color: var(--checkedProgress);
 		}
 
 		.completed .MuiRadio-colorSecondary.Mui-checked {
@@ -57,7 +59,7 @@ form {
 		}
 	}
 	
-	span.MuiIconButton-label{
+	span.MuiIconButton-label {
 		justify-content: flex-start;
 	}
 	
@@ -81,6 +83,7 @@ form {
 		padding: .5rem;
 		border-radius: .5rem;
 		background-color: var(--button);
+		color: white;
 	}
 	
 	.MuiButton-contained:hover {
@@ -97,13 +100,13 @@ form {
   margin: 3rem auto;
   margin-bottom: -2rem;
   padding: .5rem 2rem;  
-}
 
-.MuiAlert-icon {
-  font-size: 2.4rem;
-}
-
-.MuiAlert-message {
-  font-size: 1.4rem;
-  align-self: center;
+	.MuiAlert-icon {
+		font-size: 2.4rem;
+	}
+	
+	.MuiAlert-message {
+		font-size: 1.4rem;
+		align-self: center;
+	}
 }

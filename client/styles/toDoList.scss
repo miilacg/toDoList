@@ -43,15 +43,39 @@
 .modal-body {
   h5 {
     font-size: 1.45rem;
-    font-weight: normal;
-    line-height: 2;
   }
+}
 
-  h5 a {
-    color: black;
-  }
 
-  h5 a:hover {
-    text-decoration: none;
+/* Botões das atividades */
+.MuiList-root.tasks {
+  list-style-type: none;
+  padding-inline-start: 0;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-block-start: 0;
+  margin-block-end: 0;
+
+  a {
+    font-size: 0;
+    color: var(--textLabel);
   }
+}
+
+.MuiButtonBase-root.MuiIconButton-root.editar {
+  margin-right: 1rem;
+}
+
+
+/* Marcar uma atividade */
+.MuiButtonBase-root.MuiCheckbox-colorSecondary.Mui-checked {
+  color: green;
+}
+
+.MuiIconButton-edgeEnd {
+  margin-right: 0;
+}
+
+.MuiCheckbox-root .MuiSvgIcon-root {
+  font-size: 2.2rem;
 }
