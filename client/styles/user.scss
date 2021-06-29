@@ -69,6 +69,10 @@
 			font-size: 1.25rem;
 		}
 
+		.MuiFormLabel-root.Mui-focused {
+			color: rgba(0, 0, 0, 0.54);
+		}
+
 		span.MuiIconButton-label{
 			justify-content: flex-start;
 		}

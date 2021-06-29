@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { CreateUserForm } from './pages/CreateUserForm';
+import { Dashboard } from "./pages/Dashboard";
 import { EditUser } from './pages/EditUser';
 import { EditTask } from './pages/EditTask';
 import { LoginForm } from './pages/LoginForm';
@@ -21,12 +22,16 @@ export default function App() {
 					<CreateUserForm />
 				</Route>
 
-				<Route path="/editUser">
+				<Route path="/editUser/:userId">
 					<EditUser />
 				</Route>		
 
 				<Route path="/toDoList">
 					<ToDoList />
+				</Route>
+
+				<Route path="/dashboard">
+					<Dashboard />
 				</Route>		
 
 				<Route path="/editTask/:taskId">

@@ -11,10 +11,50 @@ form {
 		font-size: 1.5rem;
 	}
 
+	.MuiFormLabel-root.Mui-focused {
+		color: rgba(0, 0, 0, 0.54);
+	}
+
 	.MuiInputBase-input {
     padding: .5rem;
 		margin-top: .5rem;
 		font-size: 1.1rem;
+	}
+
+	.radio { 
+		.label.MuiFormLabel-root { // Tituto do radio
+			margin-top: 1rem;
+    	font-size: 1rem;
+		}
+
+		.MuiFormGroup-root {
+			padding-left: .1rem;
+		}
+
+		.MuiFormControlLabel-root {
+			margin-right: 2rem;
+		}
+
+		span.MuiFormControlLabel-label { // Label de cada opção
+			color: rgba(0, 0, 0, 0.54);
+			font-size: 1.03rem;
+		}
+
+		.MuiIconButton-root {
+			padding: .36rem .5rem .5rem;
+		}
+
+		.registered .MuiRadio-colorSecondary.Mui-checked {
+			color: gray;
+		}
+
+		.inProgress .MuiRadio-colorSecondary.Mui-checked {
+			color: #e6e600;
+		}
+
+		.completed .MuiRadio-colorSecondary.Mui-checked {
+			color: green;
+		}
 	}
 	
 	span.MuiIconButton-label{

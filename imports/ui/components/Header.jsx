@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom';
-import { Button, Modal } from '@material-ui/core';
+import { Link, useHistory } from 'react-router-dom';
+
+import Button from '@material-ui/core/Button';
+import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -21,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function Header({ createUser, pendingTasksTitle, user }) {
+	const history = useHistory();
 	const [open, setOpen] = useState(false);
 	const classes = useStyles();
 
@@ -45,15 +48,18 @@ export function Header({ createUser, pendingTasksTitle, user }) {
   return (		
 		<header className='app-bar'>
 			<div className='app-header'>
-				<Link to="/">
-					<h1>📝️ To do list { pendingTasksTitle }</h1>
-				</Link>
-
-				{ createUser ? ( // Se for a página de login		
-					<Link to={ createUser }>Criar conta</Link>
+				{ createUser ? ( // Se for a página de login	
+					<>
+						<h1>📝️ To do list </h1>
+						<Link to={ createUser }>Criar conta</Link>
+					</>	
 				) : (
 					user ? ( // Páginas dentro do to do list		
 						<>
+							<Link to="/dashboard">
+								<h1>📝️ To do list { pendingTasksTitle }</h1>
+							</Link>
+				
 							<Button className='user' onClick={ handleOpen }>
 								{ user.username } 🚪
 							</Button>
@@ -82,7 +88,9 @@ export function Header({ createUser, pendingTasksTitle, user }) {
 						</>
 
 					) : ( // Se for qualquer outra página
-						''					
+						<Link to="/">
+							<h1>📝️ To do list { pendingTasksTitle }</h1>
+						</Link>					
 					)					
 				) }    
 			</div>

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data'; //cada vez que os dados mudam por meio de reatividade, o componente será renderizado novamente
-import { useHistory } from "react-router-dom";
-import { Button, List } from '@material-ui/core';
+
+import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 import { TasksCollection } from '../../db/TasksCollection';
@@ -25,7 +26,6 @@ const deleteTask = ({ _id }) => {
 
 
 export const ToDoList = () => {
-  let history = useHistory();  
   const [openCreateTask, setOpenCreateTask] = useState(false);
 
 	const handleOpenCreateTask = () => {

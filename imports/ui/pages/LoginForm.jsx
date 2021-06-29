@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert } from '@material-ui/lab';
+import Alert from '@material-ui/lab/Alert';
 
 import { Header } from '../components/Header';
 import { UserForm } from '../components/UserForm';

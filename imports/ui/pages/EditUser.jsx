@@ -9,7 +9,7 @@ import {
 	Select,
 	MenuItem	
 } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import Alert from '@material-ui/lab/Alert';
 
 import { useCurrentDate } from '../../hooks/useCurrentDate';
 
@@ -147,7 +147,7 @@ export const EditUser = () => {
 					</Alert>
 
 					<div className='buttons'>	
-						<Button variant="contained"><Link to='/toDoList'>Voltar</Link></Button>
+						<Button variant="contained"><Link to='/dashboard'>Voltar</Link></Button>
 						<Button type='submit' variant="contained">Salvar alterações</Button>
 					</div>
 				</form> 				
