@@ -23,6 +23,7 @@ import '../../../client/styles/task';
 
 
 export const EditTask = () => {	
+	Meteor.subscribe('allUsers');
 	let { taskId } = useParams();
 	const history = useHistory();
 
@@ -33,7 +34,7 @@ export const EditTask = () => {
 		setState(!state);
 	}
   
-	const { task, user, isLoading } = useTracker(() => {
+	const { task, user, username, isLoading } = useTracker(() => {
 		const noDataAvailable = { task: [] };
 		const handleTask = Meteor.subscribe('tasks');
 
@@ -50,8 +51,13 @@ export const EditTask = () => {
 		if(!task){
 			return { ...noDataAvailable, isLoading: true };
 		}
-		
-    return { task, user };
+
+		const { username } = Meteor.users.findOne({ _id: task.userId });
+		if(!username){
+			return { ...noDataAvailable, isLoading: true };
+		}
+
+		return { task, user, username };
   });	
 
 	useEffect(() => {
@@ -64,26 +70,29 @@ export const EditTask = () => {
 	
 
 	useEffect(() => {
-    if(situation == 'Cadastrada') {
-			const progress = document.getElementById('inProgress');
-			const completed = document.getElementById('completed');
-			progress.removeAttribute('disabled');
-			completed.setAttribute('disabled', 'disabled');
+		if(user && user._id === task.userId) {
+			if(situation == 'Cadastrada') {
+				const progress = document.getElementById('inProgress');
+				const completed = document.getElementById('completed');
+				progress.removeAttribute('disabled');
+				completed.setAttribute('disabled', 'disabled');
+			}
+	
+			if(situation == 'Concluida') {
+				const progress = document.getElementById('inProgress');
+				const registered = document.getElementById('registered');
+				registered.removeAttribute('disabled');
+				progress.setAttribute('disabled', 'disabled');
+			}
+	
+			if(situation == 'Em andamento') {
+				const registered = document.getElementById('registered');
+				const completed = document.getElementById('completed');
+				registered.removeAttribute('disabled');
+				completed.removeAttribute('disabled');
+			}
 		}
-
-		if(situation == 'Concluida') {
-			const progress = document.getElementById('inProgress');
-			const registered = document.getElementById('registered');
-			registered.removeAttribute('disabled');
-			progress.setAttribute('disabled', 'disabled');
-		}
-
-		if(situation == 'Em andamento') {
-			const registered = document.getElementById('registered');
-			const completed = document.getElementById('completed');
-			registered.removeAttribute('disabled');
-			completed.removeAttribute('disabled');
-		}
+    
 	}, [situation]);
 
 
@@ -114,28 +123,34 @@ export const EditTask = () => {
 
 							<div className="information">
 								<h5><span>{ task.isParticular && 'Tarefa particular' } </span></h5>
-								<h5><span>Responsável pela tarefa: </span>{  }</h5>
+								<h5><span>Responsável pela tarefa: </span>{ username }</h5>
 								<h5><span>Data da tarefa: </span>{ date }</h5>													
 
 								{ task.description ? <h5><span>Descrição: </span>{ task.description }</h5> : '' }
 
 								<h5><span>Situação: </span>{ task.situation }</h5>
 
-								<form className='form taskForm' onSubmit={ handleSubmit }>
-									<FormControl className='radio'>
-										<RadioGroup row aria-label="Situação" name="situation" value={ situation } onChange={ (e) => setSituation(e.target.value) }>
-											<FormControlLabel className='registered' id='controlRegistered' value="Cadastrada" control={<Radio id='registered' />} label="Cadastrada" />
-											<FormControlLabel className='inProgress' value="Em andamento" control={<Radio id='inProgress' />} label="Em andamento" />
-											<FormControlLabel className='completed' value="Concluida" control={<Radio id='completed' />} label="Concluida" />
-										</RadioGroup>
-									</FormControl>
-
-									<div className='buttons'>
+								{ user._id != task.userId ? (
+									<div className='buttons notUser'>
 										<Button variant="contained"><Link to='/toDoList'>Voltar</Link></Button>
-										<Button type='submit' variant="contained">Salvar status</Button>
-										<Button type='button' variant="contained" onClick={ changeState }>Editar tarefa</Button>
-									</div>		
-								</form>									
+									</div>
+								) : (
+									<form className='form taskForm' onSubmit={ handleSubmit }>
+										<FormControl className='radio'>
+											<RadioGroup row aria-label="Situação" name="situation" value={ situation } onChange={ (e) => setSituation(e.target.value) }>
+												<FormControlLabel className='registered' id='controlRegistered' value="Cadastrada" control={<Radio id='registered' />} label="Cadastrada" />
+												<FormControlLabel className='inProgress' value="Em andamento" control={<Radio id='inProgress' />} label="Em andamento" />
+												<FormControlLabel className='completed' value="Concluida" control={<Radio id='completed' />} label="Concluida" />
+											</RadioGroup>
+										</FormControl>
+
+										<div className='buttons'>
+											<Button variant="contained"><Link to='/toDoList'>Voltar</Link></Button>
+											<Button type='submit' variant="contained">Salvar status</Button>
+											<Button type='button' variant="contained" onClick={ changeState }>Editar tarefa</Button>
+										</div>		
+									</form>			
+								)	}														
 							</div>							
 						</>
 					)				

@@ -59,9 +59,14 @@ export function TaskForm({
 
 	const [date, setDate] = useState(currentDate);
 	const [titleTask, setTitleTask] = useState(titleSelect);
-	const [description, setDescription] = useState(descriptionSelected);
+	const [description, setDescription] = useState('');
 	const [situation, setSituation] = useState(situationSelected);
-	const [isParticular, setIsParticular] = useState(particularSelected);	
+	const [isParticular, setIsParticular] = useState(false);
+
+	if(description) {
+		setDescription(descriptionSelected);
+		setIsParticular(particularSelected);
+	}
 
 	const classes = useStyles();
 
@@ -82,7 +87,12 @@ export function TaskForm({
 		}
 		
 		if(action == 'edition') { // Editando tarefa
-			Meteor.call('tasks.edit', taskId, date, description, situation, titleTask, isParticular);
+			Meteor.call('tasks.edit', taskId, date, description, situation, titleTask, isParticular, function (error) {
+				if(error && error.error === 'Not authorized') {				
+					const errorPermission = document.getElementById('errorPermission');
+					errorPermission.setAttribute("style", "display: flex");
+				} 
+			})
 		}					
 
 		setDate(currentDate);
@@ -173,6 +183,10 @@ export function TaskForm({
 
 			<Alert id='error' className='error' style={{ display:'none' }} severity="error">
 				Escolha uma data superior a data atual
+			</Alert>
+
+			<Alert id='errorPermission' className='error' style={{ display:'none' }} severity="error">
+				Você não tem permissão para alterar essa tarefa
 			</Alert>
 
 			<div className='buttons'>
