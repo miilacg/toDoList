@@ -125,3 +125,19 @@ h3#titleModalAddTask{
     }
   }
 }
+
+
+// Icon de apresentação da situação
+.MuiListItemIcon-root {
+  .MuiSvgIcon-root {
+    font-size: 2.2rem;
+  }
+
+  .inProgress {
+    color: var(--checkedProgress);
+  }
+
+  .completed {
+    color: green;
+  }
+} 

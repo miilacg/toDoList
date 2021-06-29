@@ -4,25 +4,32 @@ import {
 					ListItem, 
 					ListItemSecondaryAction, 
 					ListItemText, 
-					Checkbox, 
 					ListItemIcon, 
 					IconButton 
 				} from '@material-ui/core';
+import CheckBoxOutlineBlankRoundedIcon from '@material-ui/icons/CheckBoxOutlineBlankRounded';
+import CheckBoxRoundedIcon from '@material-ui/icons/CheckBoxRounded';
 import DeleteIcon from '@material-ui/icons/Delete';
+import IndeterminateCheckBoxRoundedIcon from '@material-ui/icons/IndeterminateCheckBoxRounded';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 
+import '../../../client/styles/task.scss';
 
 
-export const Task = ({ task, user, onCheckboxClick, onDeleteClick }) => {
+
+export const Task = ({ task, user, situation, onDeleteClick }) => {
 	return (
 		<ListItem key={ task._id }>
       <ListItemIcon>
-				<Checkbox
-					edge="start"
-					id={ `check${ task._id }`} 
-					onClick={ () => onCheckboxClick(task) }
-					checked={ !!task.isChecked }
-				/>
+				{ situation == 'Cadastrada' ? (
+					<CheckBoxOutlineBlankRoundedIcon />
+				) : (
+					situation == 'Concluida' ? (
+						<CheckBoxRoundedIcon className='completed' />
+					) : (
+						<IndeterminateCheckBoxRoundedIcon className='inProgress' />
+					)
+				) }
       </ListItemIcon>
 
       <ListItemText id={ task._id } primary={ task.titleTask } secondary={ user }/>

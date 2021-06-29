@@ -16,10 +16,6 @@ import '../../../client/styles/toDoList.scss';
 
 
 
-const toggleChecked = ({ _id, isChecked }) => {
-  Meteor.call('tasks.setIsChecked', _id, !isChecked);
-}
-
 const deleteTask = ({ _id }) => {
   Meteor.call('tasks.remove', _id);
 }
@@ -51,7 +47,7 @@ export const ToDoList = () => {
     }
 
     const tasks = TasksCollection.find(
-      hideCompleted ? pendingOnlyFilter : userFilter, {
+      hideCompleted ? pendingOnlyFilter : { isParticular: false }, {
         sort: { createdAt: -1 },
       }
     ).fetch();
@@ -76,13 +72,7 @@ export const ToDoList = () => {
               </Button>	
 
               { openCreateTask ? ( <CreateTask setOpenCreateTask={ setOpenCreateTask }/> ) : '' }
-
-              <div className='filter'>
-                { <button onClick={ () => setHideCompleted(!hideCompleted) }>
-                  { hideCompleted ? 'Show All' : 'Hide Completed' }
-                </button> } 
-              </div>
-
+ 
               { isLoading && <div className='loading'>loading...</div> }
 
               <List className='tasks'>
@@ -91,7 +81,7 @@ export const ToDoList = () => {
                     key={ task._id } 
                     task={ task }
                     user={ user.username }
-                    onCheckboxClick={ toggleChecked }
+                    situation={ task.situation }
                     onDeleteClick={ deleteTask }
                   />
                 )) }
