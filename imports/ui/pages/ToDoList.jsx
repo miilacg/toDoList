@@ -47,7 +47,7 @@ export const ToDoList = () => {
     }
 
     const tasks = TasksCollection.find(
-      hideCompleted ? pendingOnlyFilter : { isParticular: false }, {
+      hideCompleted ? pendingOnlyFilter : { $or: [{ isParticular: false }, { userId: user._id }] }, {
         sort: { createdAt: -1 },
       }
     ).fetch();
