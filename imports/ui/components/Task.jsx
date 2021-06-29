@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Meteor } from 'meteor/meteor';
+import { useTracker } from 'meteor/react-meteor-data';
+
 import { 
 					ListItem, 
 					ListItemSecondaryAction, 
@@ -18,9 +21,9 @@ import '../../../client/styles/task.scss';
 
 
 export const Task = ({ task, user, situation, onDeleteClick }) => {
-	return (
+	return (			
 		<ListItem key={ task._id }>
-      <ListItemIcon>
+			<ListItemIcon>
 				{ situation == 'Cadastrada' ? (
 					<CheckBoxOutlineBlankRoundedIcon />
 				) : (
@@ -30,9 +33,9 @@ export const Task = ({ task, user, situation, onDeleteClick }) => {
 						<IndeterminateCheckBoxRoundedIcon className='inProgress' />
 					)
 				) }
-      </ListItemIcon>
+			</ListItemIcon>
 
-      <ListItemText id={ task._id } primary={ task.titleTask } secondary={ user }/>
+			<ListItemText id={ task._id } primary={ task.titleTask } secondary={ user.username }/>
 		
 			<ListItemSecondaryAction>
 				<IconButton className='editar' aria-label="editar tarefa">
@@ -42,9 +45,9 @@ export const Task = ({ task, user, situation, onDeleteClick }) => {
 				</IconButton>	
 
 				<IconButton edge="end" aria-label="excluir tarefa" onClick={ () => onDeleteClick(task) }>
-          <DeleteIcon />
-        </IconButton>
-      </ListItemSecondaryAction>
-    </ListItem>
+					<DeleteIcon />
+				</IconButton>
+			</ListItemSecondaryAction>
+		</ListItem>		
 	)
 };

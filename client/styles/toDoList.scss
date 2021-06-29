@@ -50,11 +50,9 @@
 /* Botões das atividades */
 .MuiList-root.tasks {
   list-style-type: none;
-  padding-inline-start: 0;
   padding-left: 1rem;
   padding-right: 1rem;
-  margin-block-start: 0;
-  margin-block-end: 0;
+  padding-top: 2rem;
 
   a {
     font-size: 0;
@@ -62,6 +60,17 @@
   }
 }
 
-.MuiButtonBase-root.MuiIconButton-root.editar {
-  margin-right: 1rem;
+.MuiListItem-container {
+  display: flex;
+  flex-direction: row;
+
+  .MuiListItem-secondaryAction {
+    padding-right: 1rem;
+  }
+  
+  .MuiListItemSecondaryAction-root {
+    display: flex;
+    gap: 1rem;
+    right: 2rem;
+  }
 }
