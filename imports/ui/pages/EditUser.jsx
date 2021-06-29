@@ -21,7 +21,7 @@ import '../../../client/styles/user.scss';
 
 
 export const EditUser = () => {
-	const { tempCurrentDate, year, month, day, hour, minute } = useCurrentDate();	
+	const { tempDate, year, month, day, hour, minute } = useCurrentDate();	
 	const currentDate = year + '-' + month + '-' + day + 'T' + hour + ':' + minute;
 
 	const [username, setUsername] = useState('');
@@ -38,8 +38,8 @@ export const EditUser = () => {
 
 		if(!username || !password) return;
 
-		const tempDate = new Date(date);
-		if(tempDate.getTime() > tempCurrentDate) {
+		const tempCurrentDate = new Date(date);
+		if(tempCurrentDate.getTime() > tempDate) {
 			const error = document.getElementById('error');
 			error.setAttribute("style", "display: flex");
 			return;
