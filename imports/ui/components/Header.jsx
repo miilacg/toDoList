@@ -27,8 +27,11 @@ export function Header({ createUser, pendingTasksTitle, user }) {
 	const [open, setOpen] = useState(false);
 	const classes = useStyles();
 
-	function deleteUser(_id) {
-		Meteor.call('users.remove', _id);
+	async function deleteUser(_id) {		 
+		if(window.confirm('Tem certeza que você deseja excluir o usuário?')) {
+			await Meteor.call('users.remove', _id);
+			history.push('/');
+		}
 	}
 
 	const handleOpen = () => {
