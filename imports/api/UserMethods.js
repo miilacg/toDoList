@@ -16,7 +16,7 @@ Meteor.methods ({
 				password: password,
 			});
 		} else {
-			throw new Meteor.Error('Usuario já existe');
+			throw new Meteor.Error('Usuário já existe');
 		}
 	},
 	

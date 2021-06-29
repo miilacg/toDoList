@@ -40,16 +40,18 @@ export const EditUser = () => {
 
 		const tempCurrentDate = new Date(date);
 		if(tempCurrentDate.getTime() > tempDate) {
-			const error = document.getElementById('error');
-			error.setAttribute("style", "display: flex");
+				const errorMessage = document.getElementById('error');
+				errorMessage.setAttribute("style", "display: flex");
+				document.getElementsByClassName("MuiAlert-message")[0].innerHTML = 'Escolha uma data inferior a data atual';
 			return;
 		}
 
 
 		Meteor.call('users.edit', username, password, email, date, gender, company, function (error) {
 			if(error && error.error === 'Usuário já existe') {				
-				const errorUsuario = document.getElementById('errorUsuario');
-				errorUsuario.setAttribute("style", "display: flex");
+				const errorMessage = document.getElementById('error');
+				errorMessage.setAttribute("style", "display: flex");
+				document.getElementsByClassName("MuiAlert-message")[0].innerHTML = error.error;
 			} else {
 				const errorUsuario = document.getElementById('errorUsuario');
 				errorUsuario.setAttribute("style", "display: none");
@@ -138,13 +140,7 @@ export const EditUser = () => {
 						onChange={ (e) => setCompany(e.target.value) }
 					/>
 
-					<Alert id='error' className='error' style={{ display:'none' }} severity="error">
-						Escolha uma data inferior a data atual
-					</Alert>
-
-					<Alert id='errorUsuario' className='error' style={{ display:'none' }} severity="error">
-						Usuário já existe
-					</Alert>
+					<Alert id='error' className='error' style={{ display:'none' }} severity="error">	</Alert>
 
 					<div className='buttons'>	
 						<Button variant="contained"><Link to='/dashboard'>Voltar</Link></Button>

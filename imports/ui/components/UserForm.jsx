@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { Meteor } from 'meteor/meteor';
-import { Button, TextField } from '@material-ui/core';
+
+import Alert from '@material-ui/lab/Alert';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 import '../../../client/styles/forms.scss';
 import '../../../client/styles/user.scss';
@@ -20,17 +23,26 @@ export function UserForm({ action, buttonSubmit, text }) {
 		if(!password || !username) return;
 		
 		if(action == 'create') { // Criando um usuário
-			Meteor.call('users.insert', username, password);
+			Meteor.call('users.insert', username, password, function (error) {
+				if(!error) {
+					history.push('/');
+				} else {
+					const errorMessage = document.getElementById('error');
+					errorMessage.setAttribute("style", "display: flex");
+					document.getElementsByClassName("MuiAlert-message")[0].innerHTML = error.error;
+				}
+			})
 		}
 		
 		if(action == 'login') { // Fazendo login
 			Meteor.loginWithPassword(username, password, function (error) {
 				if(!error){
-					history.push('/toDoList');
+					history.push('/dashboard');
 				}
 				else {
-					const error = document.getElementById('error');
-					error.setAttribute("style", "display: flex");
+					const errorMessage = document.getElementById('error');
+					errorMessage.setAttribute("style", "display: flex");
+					document.getElementsByClassName("MuiAlert-message")[0].innerHTML = 'Usuário ou senha incorreto';
 				}
 			});
 		}					
@@ -41,26 +53,30 @@ export function UserForm({ action, buttonSubmit, text }) {
 	
   
 	return (
-		<form className='form userForm' onSubmit={ handleSubmit }>
-			<h1>{ text }</h1>
+		<>
+			<Alert id='error' className='error' style={{ display:'none' }} severity="error"> 	</Alert>	
 
-			<TextField						
-				type="text"
-				label="Nome"
-				value={ username }				
-				onChange={ (e) => setUsername(e.target.value) }
-				required
-			/>
+			<form className='form userForm' onSubmit={ handleSubmit }>
+				<h1>{ text }</h1>
 
-			<TextField						
-				type="password"
-				label="Senha"
-				value={ password }				
-				onChange={ (e) => setPassword(e.target.value) }
-				required
-			/>			
+				<TextField						
+					type="text"
+					label="Nome"
+					value={ username }				
+					onChange={ (e) => setUsername(e.target.value) }
+					required
+				/>
 
-			<Button type='submit' variant="contained">{ buttonSubmit }</Button>
-		</form>	 								
+				<TextField						
+					type="password"
+					label="Senha"
+					value={ password }				
+					onChange={ (e) => setPassword(e.target.value) }
+					required
+				/>			
+
+				<Button type='submit' variant="contained">{ buttonSubmit }</Button>
+			</form>	 	
+		</>							
 	);
 };

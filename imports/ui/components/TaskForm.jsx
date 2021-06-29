@@ -53,8 +53,8 @@ export function TaskForm({
 	action, taskId, buttonSubmit, buttonExit, onClickExit,
 	dateSelect, titleSelect, descriptionSelected, situationSelected, particularSelected 
 }) {
-
-	const { tempCurrentDate, year, month, day, hour, minute } = useCurrentDate(dateSelect);	
+	
+	const { tempDate, year, month, day, hour, minute } = useCurrentDate(dateSelect);	
 	const currentDate = year + '-' + month + '-' + day + 'T' + hour + ':' + minute;
 
 	const [date, setDate] = useState(currentDate);
@@ -75,10 +75,11 @@ export function TaskForm({
 
 		if(!titleTask || !date) return;
 
-		const tempDate = new Date(date);
-		if(tempDate.getTime() <= tempCurrentDate) {
-			const error = document.getElementById('error');
-			error.setAttribute("style", "display: flex");
+		const tempCurrentDate = new Date(date);
+		if(tempCurrentDate.getTime() <= tempDate) {
+			const errorMessage = document.getElementById('error');
+			errorMessage.setAttribute("style", "display: flex");
+			document.getElementsByClassName("MuiAlert-message")[0].innerHTML = 'Escolha uma data superior a data atual';
 			return;
 		}
 
@@ -89,8 +90,9 @@ export function TaskForm({
 		if(action == 'edition') { // Editando tarefa
 			Meteor.call('tasks.edit', taskId, date, description, situation, titleTask, isParticular, function (error) {
 				if(error && error.error === 'Not authorized') {				
-					const errorPermission = document.getElementById('errorPermission');
-					errorPermission.setAttribute("style", "display: flex");
+					const errorMessage = document.getElementById('error');
+					errorMessage.setAttribute("style", "display: flex");
+					document.getElementsByClassName("MuiAlert-message")[0].innerHTML = 'Você não tem permissão para alterar essa tarefa';
 				} 
 			})
 		}					
@@ -181,13 +183,7 @@ export function TaskForm({
 				</ListItemSecondaryAction>	
 			</FormControl>		
 
-			<Alert id='error' className='error' style={{ display:'none' }} severity="error">
-				Escolha uma data superior a data atual
-			</Alert>
-
-			<Alert id='errorPermission' className='error' style={{ display:'none' }} severity="error">
-				Você não tem permissão para alterar essa tarefa
-			</Alert>
+			<Alert id='error' className='error' style={{ display:'none' }} severity="error">	</Alert>
 
 			<div className='buttons'>
 				<Button variant="contained" onClick={ () => onClickExit() }>{ buttonExit }</Button>
