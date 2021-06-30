@@ -23,7 +23,6 @@ const deleteTask = ({ _id }) => {
 
 
 export const ToDoList = () => {
-  Meteor.subscribe('allUsers')
   const [openCreateTask, setOpenCreateTask] = useState(false);
 
 	const handleOpenCreateTask = () => {
@@ -48,6 +47,11 @@ export const ToDoList = () => {
       return { ...noDataAvailable, isLoading: true };
     }
 
+    const handlerUser = Meteor.subscribe('allUsers');
+    if (!handlerUser.ready()) {
+      return { ...noDataAvailable, isLoading: true };
+    }
+
     const tasks = TasksCollection.find(
       hideCompleted ? pendingOnlyFilter : { $or: [{ isParticular: false }, { userId: user._id }] }, {
         sort: { createdAt: -1 },
@@ -65,10 +69,12 @@ export const ToDoList = () => {
     <div className='app'>   
       { user ? (
         <>
-          <Header pendingTasksTitle={ pendingTasksTitle } user={ user } />     	  
+          <Menu pendingTasksTitle={ pendingTasksTitle } user={ user } />     	  
 
           <div className='main'>            
             <>   
+              <h2>lista de tarefas</h2> 
+
               <Button className='newTask' onClick={ handleOpenCreateTask }>
                 <AddCircleOutlineIcon />	Adicionar nova tarefa
               </Button>	
