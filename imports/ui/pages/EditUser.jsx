@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { useTracker } from 'meteor/react-meteor-data';
 
 import { 
@@ -25,34 +25,38 @@ import '../../../client/styles/user.scss';
 
 export const EditUser = () => {
 	const history = useHistory();
+	const { userId } = useParams();
 
+	Meteor.subscribe('users');
+	
 	const { user } = useTracker(() => {
-		const noDataAvailable = { user: [] };
+		const noDataAvailable = { user: [] };		
 		const user = Meteor.user();
-
+		
 		if(!user) {
       return { ...noDataAvailable };
     }
 
+		if(user._id != userId) {
+			history.push('/'); 
+			alert('Você não tem permissão para essa ação.');
+		}
+
 		return { user };
-  });
-
-	if(user == '') {
-		history.push('/'); 
-		alert('Você não tem permissão para essa ação.');
-	}
+  }); 
 
 
-	const { tempDate, year, month, day, hour, minute } = useCurrentDate();	
+	const { tempDate, year, month, day, hour, minute } = useCurrentDate(user.date);	
 	const currentDate = year + '-' + month + '-' + day + 'T' + hour + ':' + minute;
 
-	const [username, setUsername] = useState('');
+	const [username, setUsername] = useState(user.username);
 	const [password, setPassword] = useState('');
-	const [email, setEmail] = useState('');
+	const [email, setEmail] = useState(user.email);
 	const [date, setDate] = useState(currentDate);
-	const [gender, setGender] = useState('');
-	const [company, setCompany] = useState('');
+	const [gender, setGender] = useState(user.gender);
+	const [company, setCompany] = useState(user.company);
 	const [photo, setPhoto] = useState('');
+
 
 	// Editando o usuario
 	const handleSubmit = e => {
@@ -119,26 +123,26 @@ export const EditUser = () => {
 					</div>
 
 					<div className='container'>
-					<TextField
-						className='col-4'	
-						value={ password }
-						label="Password"
-						type="password"
-						autoComplete="current-password"
-						onChange={ (e) => setPassword(e.target.value) }
-						required
-					/>				
+						<TextField
+							className='col-4'	
+							value={ password }
+							label="Password"
+							type="password"
+							autoComplete="current-password"
+							onChange={ (e) => setPassword(e.target.value) }
+							required
+						/>				
 
-					<TextField
-						className='col-4'
-						value={ date }
-						label="Data de nascimento"
-						type="datetime-local"
-						onChange={ (e) => setDate(e.target.value) } 
-						InputLabelProps={{
-							shrink: true,
-						}}
-					/>	
+						<TextField
+							className='col-4'
+							value={ date }
+							label="Data de nascimento"
+							type="datetime-local"
+							onChange={ (e) => setDate(e.target.value) } 
+							InputLabelProps={{
+								shrink: true,
+							}}
+						/>	
 
 						<FormControl className='col-4'>
 							<InputLabel id="demo-simple-select-label">Sexo</InputLabel>
