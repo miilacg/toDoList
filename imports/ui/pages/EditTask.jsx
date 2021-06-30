@@ -15,7 +15,7 @@ import { TasksCollection } from '../../db/TasksCollection';
 
 import { useCurrentDate } from '../../hooks/useCurrentDate';
 
-import { Header } from '../components/Header';
+import { Menu } from '../components/Menu';
 import { TaskForm } from '../components/TaskForm';
 
 import '../../../client/styles/task';
@@ -24,6 +24,7 @@ import '../../../client/styles/task';
 
 export const EditTask = () => {	
 	Meteor.subscribe('allUsers');
+
 	let { taskId } = useParams();
 	const history = useHistory();
 
@@ -111,7 +112,7 @@ export const EditTask = () => {
 
 	return (			
 		<div className='app'>
-			<Header user={ user }/> 
+			<Menu user={ user }/> 
 			
 			<div className='main editTask'>
 				{ state ? (

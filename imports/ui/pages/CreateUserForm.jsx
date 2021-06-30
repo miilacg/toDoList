@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Header } from '../components/Header';
+import { Menu } from '../components/Menu';
 import { UserForm } from '../components/UserForm';
 
 
@@ -8,7 +8,7 @@ import { UserForm } from '../components/UserForm';
 export const CreateUserForm = () => {
 	return (
 		<div className='app'>
-			<Header /> 
+			<Menu /> 
 
 			<div className='main'>
 				<UserForm action='create' buttonSubmit='Criar' text='Preencha os campos'/>

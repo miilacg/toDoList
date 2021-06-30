@@ -8,7 +8,7 @@ import Card from '@material-ui/core/Card';
 import { TasksCollection } from '../../db/TasksCollection';
 
 import { CreateTask } from '../components/CreateTask';
-import { Header } from '../components/Header';
+import { Menu } from '../components/Menu';
 
 
 
@@ -48,7 +48,7 @@ export function Dashboard(){
 		<div className='app'>   
       { user ? (
         <>
-          <Header user={ user } />     	  
+          <Menu user={ user } />     	  
 
           <div className='main dashboard'> 
 						<h2>dashboard</h2> 

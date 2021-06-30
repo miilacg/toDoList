@@ -4,12 +4,13 @@ import { useTracker } from 'meteor/react-meteor-data'; //cada vez que os dados m
 
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
+
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 import { TasksCollection } from '../../db/TasksCollection';
 
 import { CreateTask } from '../components/CreateTask';
-import { Header } from '../components/Header';
+import { Menu } from '../components/Menu';
 import { Task } from '../components/Task';
 
 import '../../../client/styles/toDoList.scss';
@@ -22,6 +23,7 @@ const deleteTask = ({ _id }) => {
 
 
 export const ToDoList = () => {
+  Meteor.subscribe('allUsers')
   const [openCreateTask, setOpenCreateTask] = useState(false);
 
 	const handleOpenCreateTask = () => {
@@ -76,11 +78,11 @@ export const ToDoList = () => {
               { isLoading && <div className='loading'>loading...</div> }
 
               <List className='tasks'>
-                { tasks.map(task => (
+                { tasks.map(task => ( 
                   <Task 
                     key={ task._id } 
                     task={ task }
-                    user={ user.username }
+                    user={ Meteor.users.findOne({ _id: task.userId }) }
                     situation={ task.situation }
                     onDeleteClick={ deleteTask }
                   />

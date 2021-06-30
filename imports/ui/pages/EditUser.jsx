@@ -13,7 +13,7 @@ import Alert from '@material-ui/lab/Alert';
 
 import { useCurrentDate } from '../../hooks/useCurrentDate';
 
-import { Header } from '../components/Header';
+import { Menu } from '../components/Menu';
 
 import '../../../client/styles/forms.scss';
 import '../../../client/styles/user.scss';
@@ -71,7 +71,7 @@ export const EditUser = () => {
 
 	return (
 		<div className='app'>
-			<Header /> 
+			<Menu /> 
 
 			<div className='main'>	
 				<h2>editar usuário</h2>
