@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { useTracker } from 'meteor/react-meteor-data';
+
 import { 
 	Button,
 	FormControl,
@@ -9,6 +11,7 @@ import {
 	Select,
 	MenuItem	
 } from '@material-ui/core';
+
 import Alert from '@material-ui/lab/Alert';
 
 import { useCurrentDate } from '../../hooks/useCurrentDate';
@@ -21,6 +24,25 @@ import '../../../client/styles/user.scss';
 
 
 export const EditUser = () => {
+	const history = useHistory();
+
+	const { user } = useTracker(() => {
+		const noDataAvailable = { user: [] };
+		const user = Meteor.user();
+
+		if(!user) {
+      return { ...noDataAvailable };
+    }
+
+		return { user };
+  });
+
+	if(user == '') {
+		history.push('/'); 
+		alert('Você não tem permissão para essa ação.');
+	}
+
+
 	const { tempDate, year, month, day, hour, minute } = useCurrentDate();	
 	const currentDate = year + '-' + month + '-' + day + 'T' + hour + ':' + minute;
 
@@ -71,7 +93,7 @@ export const EditUser = () => {
 
 	return (
 		<div className='app'>
-			<Menu /> 
+			<Menu user={ user }/> 
 
 			<div className='main'>	
 				<h2>editar usuário</h2>
