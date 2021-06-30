@@ -21,7 +21,7 @@ import '../../../client/styles/menu.scss';
 
 
 
-export function Menu({ createUser, pendingTasksTitle, user }) {
+export function Menu({ createUser, user }) {
 	const history = useHistory();
 
 	const [openDrawer, setOpenDrawer] = useState(false);
@@ -66,7 +66,7 @@ export function Menu({ createUser, pendingTasksTitle, user }) {
 							user ? ( // Páginas dentro do to do list		
 								<>
 									<Link to="/dashboard">
-										<h1>📝️ To do list { pendingTasksTitle }</h1>
+										<h1>📝️ To do list</h1>
 									</Link>
 						
 									<Button className='user' onClick={ handleDrawer(true) }> 
@@ -76,7 +76,7 @@ export function Menu({ createUser, pendingTasksTitle, user }) {
 		
 							) : ( // Se for qualquer outra página
 								<Link to="/">
-									<h1>📝️ To do list { pendingTasksTitle }</h1>
+									<h1>📝️ To do list</h1>
 								</Link>					
 							)					
 						) }    

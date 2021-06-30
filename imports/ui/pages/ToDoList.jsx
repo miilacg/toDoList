@@ -2,8 +2,14 @@ import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data'; //cada vez que os dados mudam por meio de reatividade, o componente será renderizado novamente
 
-import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
+import { 
+	Button,
+	FormControl,
+  List,
+	InputLabel,
+	Select,
+	MenuItem	
+} from '@material-ui/core';
 
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
@@ -24,20 +30,17 @@ const deleteTask = ({ _id }) => {
 
 export const ToDoList = () => {
   const [openCreateTask, setOpenCreateTask] = useState(false);
+  const user = useTracker(() => Meteor.user()); //obtem o usuário autenticado ou nulo
 
 	const handleOpenCreateTask = () => {
     setOpenCreateTask(true);
   };
 
-  const user = useTracker(() => Meteor.user()); //obtem o usuário autenticado ou nulo
 
-  const [hideCompleted, setHideCompleted] = useState(false);
-  const hideCompletedFilter = { isChecked: { $ne: true } }; // o $ é usado para consultas quando envolver comparação de não igual ou igual sim
-  const userFilter = user ? { userId: user._id } : {}; // filtra as tarefas pelo id do usuario ou se ela não for particular
-  const pendingOnlyFilter = { ...hideCompletedFilter, ...userFilter };  
+  const [filterResponsable, setFilterResponsable] = useState('all');
 
-  const { tasks, pendingTasksCount, isLoading } = useTracker(() => {
-    const noDataAvailable = { tasks: [], pendingTasksCount: 0 };
+  const { tasks, isLoading } = useTracker(() => {
+    const noDataAvailable = { tasks: [] };
     if (!Meteor.user()) {
       return noDataAvailable;
     }
@@ -53,33 +56,46 @@ export const ToDoList = () => {
     }
 
     const tasks = TasksCollection.find(
-      hideCompleted ? pendingOnlyFilter : { $or: [{ isParticular: false }, { userId: user._id }] }, {
-        sort: { createdAt: -1 },
+      filterResponsable === 'all' ? (
+        { $or: [{ isParticular: false }, { userId: user._id }] }
+      ) : { userId: user._id }, {
+        sort: { createdAt: -1 }
       }
     ).fetch();
 
-    // Conta quantos itens não foram feitos
-    const pendingTasksCount = TasksCollection.find(pendingOnlyFilter).count();
-    return { tasks, pendingTasksCount };
+    return { tasks };
   });
   
-  const pendingTasksTitle = `${ pendingTasksCount ? `(${ pendingTasksCount })` : '' }`;  
-  
+
   return(
     <div className='app'>   
       { user ? (
         <>
-          <Menu pendingTasksTitle={ pendingTasksTitle } user={ user } />     	  
+          <Menu user={ user } />     	  
 
           <div className='main'>            
             <>   
-              <h2>lista de tarefas</h2> 
-
               <Button className='newTask' onClick={ handleOpenCreateTask }>
                 <AddCircleOutlineIcon />	Adicionar nova tarefa
               </Button>	
 
               { openCreateTask ? ( <CreateTask setOpenCreateTask={ setOpenCreateTask }/> ) : '' }
+
+              <h2>lista de tarefas</h2>               
+
+              <div className='filter'>
+                <FormControl>
+                  <InputLabel id="demo-simple-select-label">Responsável</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    value={ filterResponsable }
+                    onChange={ (e) => setFilterResponsable(e.target.value) }
+                  >
+                    <MenuItem value='my'>Eu</MenuItem>
+                    <MenuItem value='all'>Qualquer um</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
  
               { isLoading && <div className='loading'>loading...</div> }
 

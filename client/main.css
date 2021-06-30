@@ -91,17 +91,6 @@ button:focus {
 }
 
 
-/* Filtro das atividades */
-.filter {
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.filter > button {
-  background-color: #62807e;
-}
-
-
 /* Estado de carregamento */
 .loading {
   display: flex;

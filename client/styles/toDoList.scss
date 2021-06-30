@@ -23,26 +23,27 @@
 }
 
 
-// Modal do usuario
-.modal-header {
-  .modal-title {
-    margin-right: 5rem;
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: rgba(16, 17, 21, 0.768);
-  }
+// Filtro
+.filter {
+  display: flex;
+  justify-content: flex-end;
+  width: auto;
+  margin: 2rem 2rem .5rem;
+
+  .MuiFormControl-root {
+    min-width: 20%;
+
+    label {
+      padding-left: .3rem;
+    }
   
-  button.close {
-    display: flex;
-    align-self: center;
-
-    font-size: 1.9rem;
+    .MuiInputBase-root {
+      padding-left: .3rem;
+    }
   }
-}
 
-.modal-body {
-  h5 {
-    font-size: 1.45rem;
+  .MuiSelect-select:focus {
+    background-color: transparent;
   }
 }
 
