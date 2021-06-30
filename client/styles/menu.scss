@@ -1,0 +1,111 @@
+header {
+	z-index: 9999;
+	position: relative;
+	padding: 1.4rem 4% 1.4rem 3%;
+
+	background: #d2edf4;
+  background-image: linear-gradient(to bottom, #d0edf5, #e1e5f0 100%);  
+  box-shadow: 0 3px 3px rgba(34, 25, 25, 0.4);
+
+	
+	.app-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	
+		overflow: hidden;
+		text-overflow: ellipsis;
+
+		a h1, h1 {
+			margin: 0;
+
+			font-size: 1.7rem;
+			color: black;
+		}
+
+		a,
+		button.user {
+			font-size: 1.15rem;
+			text-decoration: none;
+			font-weight: 700;
+			color: #0c566b;
+		}
+
+		a:hover {
+			color: #082c38;
+		}
+
+		button.user {
+			box-shadow: none;
+			text-transform: none;
+		}
+
+		button.user:focus-visible,
+		button.user:focus {
+			outline: none;
+		}
+	} 
+}
+
+
+// Drawer
+.MuiDrawer-paper {
+	left: auto;
+	right: 0;
+	background: #d2edf4;
+	background-image: linear-gradient(to bottom, #d0edf5, #e1e5f0 100%);
+	padding: 2.4rem 1% 1.4rem 1%;
+	box-shadow: 0 3px 3px rgba(34, 25, 25, 0.4);
+
+	h1 {
+		margin: 0 2.4rem 0 2rem;
+
+		font-size: 1.95rem;
+		font-weight: 600;
+		color: black;
+	}
+
+	.MuiList-root {
+		display: flex;
+		flex-direction: column;
+		margin: 2.2rem 0;
+
+		a:hover {
+			text-decoration: none;
+		}
+
+		.MuiSvgIcon-root {
+			font-size: 1.9rem;
+			color: #0c566b;
+		}	
+
+		.arrow.MuiSvgIcon-root {
+			font-size: 1.6rem;
+		}
+	
+		.MuiTypography-displayBlock {
+			margin-left: .7rem;
+			font-size: 1.1rem;
+			font-weight: bold;
+			color: #0c566b;
+		}
+	}
+
+	.MuiCollapse-wrapper {
+		.nested {
+			padding-left: 2rem;
+		}
+
+		.MuiList-root {
+			margin: 0;
+			
+			.MuiSvgIcon-root {
+				font-size: 1.65rem;
+			}
+		}
+
+		.MuiTypography-displayBlock {
+			font-size: .95rem;
+		}	
+	}
+}
