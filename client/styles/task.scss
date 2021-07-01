@@ -32,6 +32,15 @@
   }
 }
 
+.buttons.notUser .MuiButton-contained { // Quando o usuário estiver vendo uma tarefa que não é dele
+  margin-top: 2.5rem;
+
+  .buttons .MuiButton-contained .MuiButton-label {
+    padding: 1.6rem;
+    font-size: 1.6rem;
+  }
+}
+
 
 // Task Form
 .taskForm {
@@ -82,18 +91,10 @@ h3#titleModalAddTask{
 
 // Edit task
 .editTask.main {
-  .information {
-    margin: 3rem 4rem 2rem;
-  
+  .information {  
     h5 {
-      margin-bottom: .8rem;
       font-family: inherit;
       font-weight: normal;
-  
-      span {
-        font-size: 1.4rem;
-        font-weight: bold;
-      }
     }
 
     .form {
@@ -112,6 +113,20 @@ h3#titleModalAddTask{
       .MuiFormLabel-root {
         font-size: 1.25rem;
       }
+    }
+
+    // Checked
+    .MuiButtonBase-root.MuiCheckbox-colorSecondary.Mui-checked {
+      color: #2e5a8a;
+    }
+
+    .MuiIconButton-edgeEnd {
+      margin-right: 0;
+    }
+
+    .MuiCheckbox-root .MuiSvgIcon-root {
+      margin-left: .5rem;
+      font-size: 2.1rem;
     }
   
     // Texto do checked

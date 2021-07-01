@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useTracker } from 'meteor/react-meteor-data';
 
-import { 
-	Button,
-	FormControl,
-	InputLabel,
-	TextField,
-	Select,
-	MenuItem	
-} from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import TextField from '@material-ui/core/TextField';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import Alert from '@material-ui/lab/Alert';
 
@@ -27,14 +25,16 @@ export const EditUser = () => {
 	const history = useHistory();
 	const { userId } = useParams();
 
-	Meteor.subscribe('users');
-	
-	const { user } = useTracker(() => {
+	const [state, setState] = useState(true); // true é para visualização
+
+	const { user, birthday, isLoading } = useTracker(() => {
+		Meteor.subscribe('users');
 		const noDataAvailable = { user: [] };		
 		const user = Meteor.user();
-		
+		let birthday;
+
 		if(!user) {
-      return { ...noDataAvailable };
+      return { ...noDataAvailable, isLoading: true };
     }
 
 		if(user._id != userId) {
@@ -42,56 +42,85 @@ export const EditUser = () => {
 			alert('Você não tem permissão para essa ação.');
 		}
 
-		return { user };
-  }); 
+		if(!user.username) { // A comparação ta sendo feita com o username porque ele é obrigatorio e a data não
+			return { ...noDataAvailable, isLoading: true };
+    }
 
+		if(user.date) {
+			birthday = user.date[8] + user.date[9] + '/' + user.date[5] + user.date[6] + '/' + user.date[0] + user.date[1] + user.date[2] + user.date[3];
+		} else {
+			birthday = '';
+		}
 
-	const { tempDate, year, month, day, hour, minute } = useCurrentDate(user.date);	
-	const currentDate = year + '-' + month + '-' + day + 'T' + hour + ':' + minute;
-
-	const [username, setUsername] = useState(user.username);
+		return { user, birthday };
+  });
+	
+	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
-	const [email, setEmail] = useState(user.email);
-	const [date, setDate] = useState(currentDate);
-	const [gender, setGender] = useState(user.gender);
-	const [company, setCompany] = useState(user.company);
+	const [email, setEmail] = useState('');
+	const [date, setDate] = useState('');
+	const [gender, setGender] = useState('');
+	const [company, setCompany] = useState('');
 	const [photo, setPhoto] = useState('');
 
+	useEffect(() => {
+		setUsername(user.username);
+		setEmail(user.email);
+		setDate(user.date);
+		setGender(user.gender);
+		setCompany(user.company);
+	}, [state]);
 
+	
 	// Editando o usuario
-	const handleSubmit = e => {
+	async function handleSubmit(e) {
 		e.preventDefault();
 
-		if(!username || !password) return;
+		if(!username || !password) return;		
 
-		const tempCurrentDate = new Date(date);
-		if(tempCurrentDate.getTime() > tempDate) {
-				const errorMessage = document.getElementById('error');
-				errorMessage.setAttribute("style", "display: flex");
-				document.getElementsByClassName("MuiAlert-message")[0].innerHTML = 'Escolha uma data inferior a data atual';
+		const dateBirthday = new Date(date);
+		dateBirthday.setDate(dateBirthday.getDate());
+
+		const { tempDate } = useCurrentDate();	
+
+		if(dateBirthday.getTime() > tempDate) {
+			const errorMessage = document.getElementById('error');
+			errorMessage.setAttribute("style", "display: flex");
+			document.getElementsByClassName("MuiAlert-message")[0].innerHTML = 'Escolha uma data inferior a data atual';
 			return;
 		}
 
-
-		Meteor.call('users.edit', username, password, email, date, gender, company, function (error) {
+		await Meteor.call('users.edit', username, password, email, date, gender, company, function (error) {
 			if(error && error.error === 'Usuário já existe') {				
 				const errorMessage = document.getElementById('error');
 				errorMessage.setAttribute("style", "display: flex");
 				document.getElementsByClassName("MuiAlert-message")[0].innerHTML = error.error;
 			} else {
-				const errorUsuario = document.getElementById('errorUsuario');
+				const errorUsuario = document.getElementById('error');
 				errorUsuario.setAttribute("style", "display: none");
-			}
-		})
-	
 
-		setUsername('');
-		setPassword('');
-		setEmail('');
-		setDate(currentDate);
-		setGender('');
-		setCompany('');
-		setPhoto('');
+				Meteor.loginWithPassword(username, password, function (error) {
+					if(!error){
+						setUsername(username);
+						setPassword('');
+						setEmail(email);
+						setDate(date);
+						setGender(gender);
+						setCompany(company);
+						setPhoto('');
+
+						setState(true);
+					}
+					else {
+						const errorMessage = document.getElementById('error');
+						errorMessage.setAttribute("style", "display: flex");
+						document.getElementsByClassName("MuiAlert-message")[0].innerHTML = 'Algo deu errado';
+
+						setState(false);
+					}
+				});
+			}
+		});
 	};
 
 
@@ -99,80 +128,108 @@ export const EditUser = () => {
 		<div className='app'>
 			<Menu user={ user }/> 
 
-			<div className='main'>	
-				<h2>editar usuário</h2>
+			<div className='main'>
+				{ state ? (
+					isLoading ? (
+						<div className='loading'>loading...</div> 
+					) : (
+						<>
+							<h2>{ user.username }</h2>
 
-				<form onSubmit={ handleSubmit } className='editUser'>
-					<div className='container'>
-						<TextField			
-							className='col-6'			
-							value={ username }
-							label="Nome"
-							type="text"
-							onChange={ (e) => setUsername(e.target.value) }
-							required
-						/>
+							<div className="information">
+								<h5><span>Email: </span>{ user.email }</h5>
+								<h5><span>Data de nascimento: </span>{ birthday }</h5>
+								<h5><span>Genêro: </span>{ user.gender }</h5>
+								<h5><span>Empresa: </span>{ user.company }</h5>
 
-						<TextField
-							className='col-6'	
-							value={ email }
-							label="E-mail"
-							type="email"
-							onChange={ (e) => setEmail(e.target.value) }
-						/>
-					</div>
+								<div className='buttons'>
+									<Button variant="contained"><Link to='/dashboard'>Voltar</Link></Button>
+									<Button type='button' variant="contained" onClick={ () => setState(!state) }>Editar usuário</Button>
+								</div>																
+							</div>							
+						</>
+					)
+				) : (
+					isLoading ? (
+						<div className='loading'>loading...</div> 
+					) : (
+						<>
+							<h2>editar usuário: { user.username }</h2>
+							
+							<form onSubmit={ handleSubmit } className='editUser'>
+								<div className='container'>
+									<TextField			
+										className='col-6'			
+										value={ username }
+										label="Nome"
+										type="text"
+										onChange={ (e) => setUsername(e.target.value) }
+										required
+									/>
 
-					<div className='container'>
-						<TextField
-							className='col-4'	
-							value={ password }
-							label="Password"
-							type="password"
-							autoComplete="current-password"
-							onChange={ (e) => setPassword(e.target.value) }
-							required
-						/>				
+									<TextField
+										className='col-6'	
+										value={ email }
+										label="E-mail"
+										type="email"
+										onChange={ (e) => setEmail(e.target.value) }
+									/>
+								</div>
 
-						<TextField
-							className='col-4'
-							value={ date }
-							label="Data de nascimento"
-							type="datetime-local"
-							onChange={ (e) => setDate(e.target.value) } 
-							InputLabelProps={{
-								shrink: true,
-							}}
-						/>	
+								<div className='container'>
+									<TextField
+										className='col-4'	
+										value={ password }
+										label="Password"
+										type="password"
+										autoComplete="current-password"
+										onChange={ (e) => setPassword(e.target.value) }
+										required
+									/>				
 
-						<FormControl className='col-4'>
-							<InputLabel id="demo-simple-select-label">Sexo</InputLabel>
-							<Select
-								labelId="demo-simple-select-label"
-								value={ gender }
-								onChange={ (e) => setGender(e.target.value) }
-							>
-								<MenuItem value={ 'Feminino' }>Feminino</MenuItem>
-								<MenuItem value={ 'Masculino' }>Masculino</MenuItem>
-								<MenuItem value={ 'Prefiro não informar' }>Prefiro não informar</MenuItem>
-							</Select>
-						</FormControl>
-					</div>
+									<TextField
+										className='col-4'
+										value={ date }
+										label="Data de nascimento"
+										type="date"
+										onChange={ (e) => setDate(e.target.value) } 
+										InputLabelProps={{
+											shrink: true,
+										}}
+									/>	
 
-					<TextField
-						className='col-5'
-						value={ company }
-						label="Empresa"
-						type="text"
-						onChange={ (e) => setCompany(e.target.value) }
-					/>
+									<FormControl className='col-4'>
+										<InputLabel id="demo-simple-select-label">Genêro</InputLabel>
+										<Select
+											labelId="demo-simple-select-label"
+											value={ gender }
+											onChange={ (e) => setGender(e.target.value) }
+										>
+											<MenuItem value={ 'Feminino' }>Feminino</MenuItem>
+											<MenuItem value={ 'Masculino' }>Masculino</MenuItem>
+											<MenuItem value={ 'Prefiro não informar' }>Prefiro não informar</MenuItem>
+										</Select>
+									</FormControl>
+								</div>
 
-					<Alert id='error' className='error' style={{ display:'none' }} severity="error">	</Alert>
+								<TextField
+									className='col-5'
+									value={ company }
+									label="Empresa"
+									type="text"
+									onChange={ (e) => setCompany(e.target.value) }
+								/>
 
-					<div className='buttons'>	
-						<Button variant="contained"><Link to='/dashboard'>Voltar</Link></Button>
-						<Button type='submit' variant="contained">Salvar alterações</Button>
-					</div>
-				</form> 				
+								<Alert id='error' className='error' style={{ display:'none' }} severity="error">	</Alert>
+
+								<div className='buttons'>	
+									<Button variant="contained" onClick={ () => setState(!state) }>Voltar</Button>
+									<Button type='submit' variant="contained">Salvar alterações</Button>
+								</div>
+							</form> 	
+						</>
+					)
+				) }							
 			</div>
 		</div>
 	);
