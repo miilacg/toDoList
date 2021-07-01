@@ -2,12 +2,12 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { 
-					ListItem, 
-					ListItemSecondaryAction, 
-					ListItemText, 
-					ListItemIcon, 
-					IconButton 
-				} from '@material-ui/core';
+				ListItem, 
+				ListItemSecondaryAction, 
+				ListItemText, 
+				ListItemIcon, 
+				IconButton 
+ 			} from '@material-ui/core';
 				
 import CheckBoxOutlineBlankRoundedIcon from '@material-ui/icons/CheckBoxOutlineBlankRounded';
 import CheckBoxRoundedIcon from '@material-ui/icons/CheckBoxRounded';
@@ -37,7 +37,7 @@ export const Task = ({ task, user, situation, onDeleteClick }) => {
 			</ListItemIcon>
 
 			<ListItemText id={ task._id } primary={ task.titleTask } secondary={ user.username }/>
-		
+
 			<ListItemSecondaryAction>
 				<IconButton className='editar' aria-label="editar tarefa">
 					<Link to={ `/editTask/${ task._id }` } >

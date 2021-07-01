@@ -10,6 +10,8 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
+import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
+
 import Alert from '@material-ui/lab/Alert';
 
 import { useCurrentDate } from '../../hooks/useCurrentDate';
@@ -71,7 +73,15 @@ export const EditUser = () => {
 		setCompany(user.company);
 	}, [state]);
 
-	
+
+	function previewImg (event) {
+    var reader = new FileReader();
+    reader.onload = function (event) {
+			$("#preview").attr("src", event.target.result);
+    };
+    reader.readAsDataURL(event.target.files[0]);
+	};
+
 	// Editando o usuario
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -154,9 +164,13 @@ export const EditUser = () => {
 						<div className='loading'>loading...</div> 
 					) : (
 						<>
-							<h2>editar usuário: { user.username }</h2>
+							<h2><AccountCircleRoundedIcon />editar usuário: { user.username } </h2>					
+
+							<img id="preview" className="img-fluid" />
 							
 							<form onSubmit={ handleSubmit } className='editUser'>
+								<input id="img-input" onChange={ previewImg } type="file" name="imagem" />
+
 								<div className='container'>
 									<TextField			
 										className='col-6'			
