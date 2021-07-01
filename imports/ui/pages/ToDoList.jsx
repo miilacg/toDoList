@@ -23,8 +23,10 @@ import '../../../client/styles/toDoList.scss';
 
 
 
-const deleteTask = ({ _id }) => {
-  Meteor.call('tasks.remove', _id);
+async function deleteTask({ _id }) {
+  if(window.confirm('Tem certeza que você deseja excluir a tarefa?')) {
+    await Meteor.call('tasks.remove', _id);
+  }  
 }
 
 
