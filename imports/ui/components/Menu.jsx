@@ -92,20 +92,6 @@ export function Menu({ createUser, user }) {
 						<h1>📝️ To do list </h1>
 
 						<List>
-							<Link to='/dashboard'>
-								<ListItem>
-									<DashboardRoundedIcon /> 
-									<ListItemText primary='Dashboard'/>
-								</ListItem>
-							</Link>
-
-							<Link to='/toDoList'>
-								<ListItem>
-									<ListAltRoundedIcon /> 
-									<ListItemText primary='Lista de tarefas'/>
-								</ListItem>
-							</Link>
-
 							<ListItem button onClick={ handleClick }>
 								<AccountCircleRoundedIcon /> 
 								<ListItemText primary='Perfil'/>
@@ -131,6 +117,20 @@ export function Menu({ createUser, user }) {
 									</ListItem>
 								</List>
 							</Collapse>
+
+							<Link to='/dashboard'>
+								<ListItem>
+									<DashboardRoundedIcon /> 
+									<ListItemText primary='Dashboard'/>
+								</ListItem>
+							</Link>
+
+							<Link to='/toDoList'>
+								<ListItem>
+									<ListAltRoundedIcon /> 
+									<ListItemText primary='Lista de tarefas'/>
+								</ListItem>
+							</Link>
 						</List>
 					</div>
 				</Drawer>
