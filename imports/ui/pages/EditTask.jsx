@@ -3,13 +3,11 @@ import { Link, useHistory, useParams } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 
-import { 
-	Button,
-	FormControl,
-	FormControlLabel,
-	Radio,
-	RadioGroup	
-} from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 
 import { TasksCollection } from '../../db/TasksCollection';
 
@@ -133,7 +131,7 @@ export const EditTask = () => {
 
 								{ user._id != task.userId ? (
 									<div className='buttons notUser'>
-										<Button variant="contained"><Link to='/toDoList'>Voltar</Link></Button>
+										<Button variant="contained"><Link to={ `/toDoList/${ user._id }` }>Voltar</Link></Button>
 									</div>
 								) : (
 									<form className='form taskForm' onSubmit={ handleSubmit }>
@@ -146,7 +144,7 @@ export const EditTask = () => {
 										</FormControl>
 
 										<div className='buttons'>
-											<Button variant="contained"><Link to='/toDoList'>Voltar</Link></Button>
+											<Button variant="contained"><Link to={ `/toDoList/${ user._id }` }>Voltar</Link></Button>
 											<Button type='submit' variant="contained">Salvar status</Button>
 											<Button type='button' variant="contained" onClick={ changeState }>Editar tarefa</Button>
 										</div>		

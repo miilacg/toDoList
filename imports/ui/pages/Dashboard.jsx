@@ -88,7 +88,7 @@ export function Dashboard(){
 
 							<Card className='card'>
 								<button>
-									<h5> <Link to='/toDoList'> Visualizar tarefas </Link> </h5>
+									<h5> <Link to={ `/toDoList/${ user._id }` }> Visualizar tarefas </Link> </h5>
 								</button>
 							</Card>	
 						</div>    

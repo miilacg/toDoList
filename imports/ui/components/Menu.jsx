@@ -125,7 +125,7 @@ export function Menu({ createUser, user }) {
 								</ListItem>
 							</Link>
 
-							<Link to='/toDoList'>
+							<Link to={ `/toDoList/${ user._id }` }>
 								<ListItem>
 									<ListAltRoundedIcon /> 
 									<ListItemText primary='Lista de tarefas'/>

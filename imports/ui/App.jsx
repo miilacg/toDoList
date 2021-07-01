@@ -26,7 +26,7 @@ export default function App() {
 					<EditUser />
 				</Route>		
 
-				<Route path="/toDoList">
+				<Route path="/toDoList/:userId">
 					<ToDoList />
 				</Route>
 
@@ -36,7 +36,7 @@ export default function App() {
 
 				<Route path="/editTask/:taskId">
 					<EditTask />
-				</Route>			
+				</Route>		
 			</Switch>
 		</Router>
   );

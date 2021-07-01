@@ -1,7 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Meteor } from 'meteor/meteor';
-import { useTracker } from 'meteor/react-meteor-data';
+import { Link, useParams } from 'react-router-dom';
 
 import { 
 					ListItem, 
@@ -10,6 +8,7 @@ import {
 					ListItemIcon, 
 					IconButton 
 				} from '@material-ui/core';
+				
 import CheckBoxOutlineBlankRoundedIcon from '@material-ui/icons/CheckBoxOutlineBlankRounded';
 import CheckBoxRoundedIcon from '@material-ui/icons/CheckBoxRounded';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -21,6 +20,8 @@ import '../../../client/styles/task.scss';
 
 
 export const Task = ({ task, user, situation, onDeleteClick }) => {
+	const { userId } = useParams();
+
 	return (			
 		<ListItem key={ task._id }>
 			<ListItemIcon>
@@ -44,9 +45,15 @@ export const Task = ({ task, user, situation, onDeleteClick }) => {
 					</Link>	
 				</IconButton>	
 
-				<IconButton edge="end" aria-label="excluir tarefa" onClick={ () => onDeleteClick(task) }>
-					<DeleteIcon />
-				</IconButton>
+				{ userId === task.userId ? (
+					<IconButton edge="end" aria-label="excluir tarefa" onClick={ () => onDeleteClick(task) }>
+						<DeleteIcon />
+					</IconButton>
+				) : (
+					<IconButton edge="end" disabled aria-label="excluir tarefa">
+						<DeleteIcon />
+					</IconButton>
+				)	}
 			</ListItemSecondaryAction>
 		</ListItem>		
 	)
