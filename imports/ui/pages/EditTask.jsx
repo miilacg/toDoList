@@ -59,13 +59,22 @@ export const EditTask = () => {
 		return { task, user, username };
   });	
 
-	useEffect(() => {
-		setSituation(task.situation);
-	}, [task.situation]);
-
 
 	const { year, month, day, hour, minute } = useCurrentDate(task.date);
 	date = day + '/' + month + '/' + year + ' - ' + hour + ':' + minute;
+	
+
+	function colorChecked() { //necessario para colorir a situação que tiver selecionada quando a página for carregada
+		if(!task.situation) {
+			return { isLoading: true }
+		}
+
+		setSituation(task.situation);
+	}
+
+	useEffect(() => {
+		colorChecked();
+	}, [task.situation]);
 	
 
 	useEffect(() => {
@@ -90,8 +99,7 @@ export const EditTask = () => {
 				registered.removeAttribute('disabled');
 				completed.removeAttribute('disabled');
 			}
-		}
-    
+		}    
 	}, [situation]);
 
 
