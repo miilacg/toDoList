@@ -42,7 +42,7 @@ export function TaskForm({
 	dateSelect, titleSelect, descriptionSelected, situationSelected, particularSelected 
 }) {
 	
-	const { tempDate, year, month, day, hour, minute } = useCurrentDate(dateSelect);	
+	const { year, month, day, hour, minute } = useCurrentDate(dateSelect);	
 	const currentDate = year + '-' + month + '-' + day + 'T' + hour + ':' + minute;
 
 	const [date, setDate] = useState(currentDate);
@@ -55,7 +55,6 @@ export function TaskForm({
 
 	useEffect(() => {
 		if(action === 'edition') {
-			console.log('oi');
 			setDescription(descriptionSelected);
 			setIsParticular(particularSelected);
 		}
@@ -67,8 +66,10 @@ export function TaskForm({
 
 		if(!titleTask || !date) return;
 
-		const tempCurrentDate = new Date(date);
-		if(tempCurrentDate.getTime() <= tempDate) {
+		const tempCurrentDate = new Date();
+		const tempDateSelected = new Date(date);
+	
+		if(tempCurrentDate.getTime() <= tempDateSelected.getTime) {
 			const errorMessage = document.getElementById('error');
 			errorMessage.setAttribute("style", "display: flex");
 			document.getElementsByClassName("MuiAlert-message")[0].innerHTML = 'Escolha uma data superior a data atual';
