@@ -5,12 +5,14 @@ import { useTracker } from 'meteor/react-meteor-data';
 
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
+import IconButton from '@material-ui/core/IconButton';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
+import CameraEnhanceOutlinedIcon from '@material-ui/icons/CameraEnhanceOutlined';
 
 import Alert from '@material-ui/lab/Alert';
 
@@ -74,6 +76,11 @@ export const EditUser = () => {
 		setPhoto(user.photo);
 	}, [state]);
 
+
+	function uploadProfileImage(){
+		console.log('oi');
+		$('#img-input').click();
+	}
 
 	function previewImg (e) {
     var reader = new FileReader();
@@ -148,14 +155,13 @@ export const EditUser = () => {
 					isLoading ? (
 						<div className='loading'>loading...</div> 
 					) : (
-						<>
-						
-							<div className='title'>
-								<div className='photoProfile'>
-									{ photo ? (
+						<>						
+							<div className='title edit'>
+								<div className='photoProfile'>									
+									{ user.photo ? (
 										<img id="preview" src={ user.photo } className="img-fluid" />
 									) : (
-											<AccountCircleRoundedIcon />
+										<AccountCircleRoundedIcon />
 									) }
 								</div>
 							
@@ -181,21 +187,27 @@ export const EditUser = () => {
 						<div className='loading'>loading...</div> 
 					) : (
 						<>
-							<form onSubmit={ handleSubmit } className='editUser'>
-								<div className='title'>
-									<div className='photoProfile'>
+							<div className='title'>
+								<div className='addPhoto'>		
+									<CameraEnhanceOutlinedIcon className='camera' titleAccess='Alterar foto de perfil' onClick={ () => uploadProfileImage() } />		
+																	
+									<div className='photoProfile'>										
 										{ photo ? (
 											<img id="preview" src={ user.photo } className="img-fluid" />
 										) : (
-												<AccountCircleRoundedIcon />
+											<AccountCircleRoundedIcon />
 										) }
 									</div>
-								
-									<h2>editar usuário: { user.username } </h2>	
-								</div>								
+								</div>	
 							
-								<input id="img-input" onChange={ previewImg } type="file" name="imagem" />
+								<div>
+									<h2>editar usuário</h2>	
+									<h2>{ user.username }</h2>
+								</div>
+							</div>
 
+							<form onSubmit={ handleSubmit } className='editUser'>	
+								<input id="img-input" className='d-none' onChange={ previewImg } type="file" name="imagem" />				
 
 								<div className='container'>
 									<TextField			
