@@ -63,7 +63,7 @@ export const EditUser = () => {
 	const [date, setDate] = useState('');
 	const [gender, setGender] = useState('');
 	const [company, setCompany] = useState('');
-	const [photo, setPhoto] = useState('');
+	const [photo, setPhoto] = useState(false);
 
 	useEffect(() => {
 		setUsername(user.username);
@@ -80,6 +80,7 @@ export const EditUser = () => {
 			$("#preview").attr("src", event.target.result);
     };
     reader.readAsDataURL(event.target.files[0]);
+		setPhoto(true);
 	};
 
 	// Editando o usuario
@@ -164,9 +165,17 @@ export const EditUser = () => {
 						<div className='loading'>loading...</div> 
 					) : (
 						<>
-							<h2><AccountCircleRoundedIcon />editar usuário: { user.username } </h2>					
-
-							<img id="preview" className="img-fluid" />
+							<div className='title'>
+								<div className='photoProfile'>
+									{ photo ? (
+										<img id="preview" className="img-fluid" />
+									) : (
+											<AccountCircleRoundedIcon />
+									) }
+								</div>
+							
+								<h2>editar usuário: { user.username } </h2>	
+							</div>	
 							
 							<form onSubmit={ handleSubmit } className='editUser'>
 								<input id="img-input" onChange={ previewImg } type="file" name="imagem" />

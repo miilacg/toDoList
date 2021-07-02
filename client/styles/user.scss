@@ -1,6 +1,44 @@
+.main .title {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	padding-top: .5rem;
+
+	.photoProfile {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+
+		margin: auto 2rem auto -1rem;
+    width: 5rem;
+    height: 5rem;
+
+		.MuiSvgIcon-root {
+			//margin: auto 2rem auto -1rem;
+			//margin-top: .5rem;
+			font-size: 5rem;
+		}	
+
+		img {
+			width: 100%;
+			border-radius: 50%;
+			height: 100%;
+			object-fit: cover;
+			object-position: center;
+		}
+	}
+
+	h2 {
+		margin: 0;
+	}
+}
+
+
 .buttons {
 	margin-top: 3rem;
 }
+
 
 .userForm { // Login e criação do usuário
 	display: flex;
