@@ -34,20 +34,8 @@ const useStyles = makeStyles((theme) => ({
       width: '25ch'
     },
 	},
-
-	paper: {
-    position: 'absolute',
-    width: 400,
-		top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    backgroundColor: theme.palette.background.paper,
-    border: 'none',
-		borderRadius: '1rem',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(3),
-  },
 }));
+
 
 export function TaskForm({ 
 	action, taskId, buttonSubmit, buttonExit, onClickExit,
@@ -63,12 +51,16 @@ export function TaskForm({
 	const [situation, setSituation] = useState(situationSelected);
 	const [isParticular, setIsParticular] = useState(false);
 
-	if(description) {
-		setDescription(descriptionSelected);
-		setIsParticular(particularSelected);
-	}
-
 	const classes = useStyles();
+
+	useEffect(() => {
+		if(action === 'edition') {
+			console.log('oi');
+			setDescription(descriptionSelected);
+			setIsParticular(particularSelected);
+		}
+	}, []);
+	
 
 	const handleSubmit = e => {
 		e.preventDefault();

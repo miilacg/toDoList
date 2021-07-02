@@ -60,6 +60,29 @@
     width: auto;
   } 
 
+  // Checked
+  .MuiButtonBase-root.MuiCheckbox-colorSecondary.Mui-checked {
+    color: #2e5a8a;
+  }
+
+  .MuiIconButton-edgeEnd {
+    margin-right: 0;
+  }
+
+  .MuiCheckbox-root .MuiSvgIcon-root {
+    margin-left: .5rem;
+    font-size: 2.1rem;
+  }
+
+  // Texto do checked
+  .MuiFormControl-root  .MuiListItemSecondaryAction-root .MuiInputLabel-formControl {		
+    top: 0;
+    left: 0;
+    position: absolute;
+    transform: translate(0, -40%) scale(1);
+    margin: 0;
+  }
+
   .error {
     width: 100%;
     margin: 1.5rem auto;
@@ -99,8 +122,12 @@ h3#titleModalAddTask{
 
     .form {
       margin-top: 0;
+
+      .radio .MuiFormGroup-root {
+        padding-left: .5rem;
+      }
     }
-  
+
     div.MuiFormControl-root:first-child {
       margin-top: 0;
     }
@@ -113,30 +140,6 @@ h3#titleModalAddTask{
       .MuiFormLabel-root {
         font-size: 1.25rem;
       }
-    }
-
-    // Checked
-    .MuiButtonBase-root.MuiCheckbox-colorSecondary.Mui-checked {
-      color: #2e5a8a;
-    }
-
-    .MuiIconButton-edgeEnd {
-      margin-right: 0;
-    }
-
-    .MuiCheckbox-root .MuiSvgIcon-root {
-      margin-left: .5rem;
-      font-size: 2.1rem;
-    }
-  
-    // Texto do checked
-    .MuiFormControl-root  .MuiListItemSecondaryAction-root .MuiInputLabel-formControl {		
-      top: 0;
-      left: 0;
-      position: absolute;
-      transform: translate(0, -40%) scale(1);
-      margin: 0;
-      color: rgb(33, 37, 41);
     }
   }
 }
