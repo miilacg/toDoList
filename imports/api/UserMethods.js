@@ -20,13 +20,14 @@ Meteor.methods ({
 		}
 	},
 	
-	'users.edit'(username, password, email, date, gender, company) {
+	'users.edit'(username, password, email, date, gender, company, photo) {
 		check(username, String);
 		check(password, String);
 		check(email, String);
 		check(date, String);
 		check(gender, String);
-		check(company, String);		
+		check(company, String);	
+		check(photo, String);		
 
 		if (!this.userId) {
 			throw new Meteor.Error('Not authorized.');
@@ -43,6 +44,7 @@ Meteor.methods ({
 						date: date,
 						gender: gender,
 						company: company, 
+						photo: photo,
 					},
 				});
 				Accounts.setPassword(this.userId, password);
@@ -56,6 +58,7 @@ Meteor.methods ({
 					date: date,
 					gender: gender,
 					company: company, 
+					photo: photo,
 				},
 			});
 			Accounts.setPassword(this.userId, password);

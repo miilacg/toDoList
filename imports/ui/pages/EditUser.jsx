@@ -63,7 +63,7 @@ export const EditUser = () => {
 	const [date, setDate] = useState('');
 	const [gender, setGender] = useState('');
 	const [company, setCompany] = useState('');
-	const [photo, setPhoto] = useState(false);
+	const [photo, setPhoto] = useState('');
 
 	useEffect(() => {
 		setUsername(user.username);
@@ -71,17 +71,21 @@ export const EditUser = () => {
 		setDate(user.date);
 		setGender(user.gender);
 		setCompany(user.company);
+		setPhoto(user.photo);
 	}, [state]);
 
 
-	function previewImg (event) {
+	function previewImg (e) {
     var reader = new FileReader();
-    reader.onload = function (event) {
-			$("#preview").attr("src", event.target.result);
+
+    reader.onload = function (e) {
+			$("#preview").attr("src", e.target.result);
+			setPhoto(e.target.result);
     };
-    reader.readAsDataURL(event.target.files[0]);
-		setPhoto(true);
+
+    reader.readAsDataURL(e.target.files[0]);
 	};
+
 
 	// Editando o usuario
 	async function handleSubmit(e) {
@@ -101,7 +105,7 @@ export const EditUser = () => {
 			return;
 		}
 
-		await Meteor.call('users.edit', username, password, email, date, gender, company, function (error) {
+		await Meteor.call('users.edit', username, password, email, date, gender, company, photo, function (error) {
 			if(error && error.error === 'Usuário já existe') {				
 				const errorMessage = document.getElementById('error');
 				errorMessage.setAttribute("style", "display: flex");
@@ -118,7 +122,7 @@ export const EditUser = () => {
 						setDate(date);
 						setGender(gender);
 						setCompany(company);
-						setPhoto('');
+						setPhoto(photo);
 
 						setState(true);
 					}
@@ -145,7 +149,19 @@ export const EditUser = () => {
 						<div className='loading'>loading...</div> 
 					) : (
 						<>
-							<h2>{ user.username }</h2>
+						
+							<div className='title'>
+								<div className='photoProfile'>
+									{ photo ? (
+										<img id="preview" src={ user.photo } className="img-fluid" />
+									) : (
+											<AccountCircleRoundedIcon />
+									) }
+								</div>
+							
+								<h2>{ user.username }</h2>	
+							</div>	
+
 
 							<div className="information">
 								<h5><span>Email: </span>{ user.email }</h5>
@@ -165,20 +181,21 @@ export const EditUser = () => {
 						<div className='loading'>loading...</div> 
 					) : (
 						<>
-							<div className='title'>
-								<div className='photoProfile'>
-									{ photo ? (
-										<img id="preview" className="img-fluid" />
-									) : (
-											<AccountCircleRoundedIcon />
-									) }
-								</div>
-							
-								<h2>editar usuário: { user.username } </h2>	
-							</div>	
-							
 							<form onSubmit={ handleSubmit } className='editUser'>
+								<div className='title'>
+									<div className='photoProfile'>
+										{ photo ? (
+											<img id="preview" src={ user.photo } className="img-fluid" />
+										) : (
+												<AccountCircleRoundedIcon />
+										) }
+									</div>
+								
+									<h2>editar usuário: { user.username } </h2>	
+								</div>								
+							
 								<input id="img-input" onChange={ previewImg } type="file" name="imagem" />
+
 
 								<div className='container'>
 									<TextField			
