@@ -26,6 +26,8 @@ export function UserForm({ action, buttonSubmit, text }) {
 			Meteor.call('users.insert', username, password, function (error) {
 				if(!error) {
 					history.push('/');
+					const successMessage = document.getElementById('success');
+					successMessage.setAttribute("style", "display: flex");
 				} else {
 					const errorMessage = document.getElementById('error');
 					errorMessage.setAttribute("style", "display: flex");
@@ -54,8 +56,6 @@ export function UserForm({ action, buttonSubmit, text }) {
   
 	return (
 		<>
-			<Alert id='error' className='error' style={{ display:'none' }} severity="error"> 	</Alert>	
-
 			<form className='form userForm' onSubmit={ handleSubmit }>
 				<h1>{ text }</h1>
 
@@ -77,6 +77,12 @@ export function UserForm({ action, buttonSubmit, text }) {
 
 				<Button type='submit' variant="contained">{ buttonSubmit }</Button>
 			</form>	 	
+
+			<Alert id='error' className='alert error' style={{ display:'none' }} severity="error"> </Alert>	
+
+			<Alert id='success' className='alert success' style={{ display:'none' }} severity="success"> 	
+				Cadastro efetuado com sucesso
+			</Alert>
 		</>							
 	);
 };

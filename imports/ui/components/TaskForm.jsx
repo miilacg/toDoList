@@ -176,7 +176,7 @@ export function TaskForm({
 				</ListItemSecondaryAction>	
 			</FormControl>		
 
-			<Alert id='error' className='error' style={{ display:'none' }} severity="error">	</Alert>
+			<Alert id='error' className='alert error' style={{ display:'none' }} severity="error">	</Alert>
 
 			<div className='buttons'>
 				<Button variant="contained" onClick={ () => onClickExit() }>{ buttonExit }</Button>

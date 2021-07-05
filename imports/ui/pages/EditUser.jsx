@@ -5,7 +5,6 @@ import { useTracker } from 'meteor/react-meteor-data';
 
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
-import IconButton from '@material-ui/core/IconButton';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
@@ -284,7 +283,7 @@ export const EditUser = () => {
 									onChange={ (e) => setCompany(e.target.value) }
 								/>
 
-								<Alert id='error' className='error' style={{ display:'none' }} severity="error">	</Alert>
+								<Alert id='error' className='alert error' style={{ display:'none' }} severity="error">	</Alert>
 
 								<div className='buttons'>	
 									<Button variant="contained" onClick={ () => setState(!state) }>Voltar</Button>

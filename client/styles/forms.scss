@@ -93,7 +93,31 @@ form {
 
 
 // Mensagem de erro
-.error {
+.alert {
+	z-index: 999;
+	position: fixed;
+	bottom: 1rem;
+	left: 1rem;
+
+	width: 35%;
+	height: auto;
+
+	margin: -2rem 2rem 1rem;
+	padding: .5rem 2rem;  
+
+	justify-content: center;
+
+	.MuiAlert-icon {
+		font-size: 2.4rem;
+	}
+	
+	.MuiAlert-message {
+		font-size: 1.4rem;
+		align-self: center;
+	}
+}
+
+/*.alert {
   width: 35%;
   height: auto;
   justify-content: center;
@@ -109,4 +133,4 @@ form {
 		font-size: 1.4rem;
 		align-self: center;
 	}
-}
+}*/
