@@ -36,7 +36,9 @@ export default function App() {
 
 				<Route path="/editTask/:taskId">
 					<EditTask />
-				</Route>		
+				</Route>	
+
+				<Route component={ Dashboard }/>	
 			</Switch>
 		</Router>
   );

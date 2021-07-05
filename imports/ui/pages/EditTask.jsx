@@ -101,16 +101,15 @@ export const EditTask = () => {
 			}
 		}    
 	}, [situation]);
-
-
+	
 	function handleSubmit(e) {
 		e.preventDefault();		
-
+		
 		if(!situation) return;
 
 		Meteor.call('tasks.setSituation', taskId, situation, function (error) {
 			if(!error) {				
-				history.push('/toDoList');
+				history.push(`/toDoList/${ user._id }`);
 			}
 		})
 	};
