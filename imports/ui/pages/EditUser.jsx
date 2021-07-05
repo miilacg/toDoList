@@ -69,16 +69,30 @@ export const EditUser = () => {
 
 	useEffect(() => {
 		setUsername(user.username);
-		setEmail(user.email);
-		setDate(user.date);
-		setGender(user.gender);
-		setCompany(user.company);
-		setPhoto(user.photo);
+
+		if(user.email != undefined) {
+			setEmail(user.email);
+		} 
+
+		if(user.date != undefined) {
+			setDate(user.date);
+		} 
+
+		if(user.gender != undefined) {
+			setGender(user.gender);
+		} 
+
+		if(user.company != undefined) {
+			setCompany(user.company);
+		}
+		
+		if(user.photo != undefined) {
+			setPhoto(user.photo);
+		} 
 	}, [state]);
 
 
 	function uploadProfileImage(){
-		console.log('oi');
 		$('#img-input').click();
 	}
 
@@ -86,8 +100,8 @@ export const EditUser = () => {
     var reader = new FileReader();
 
     reader.onload = function (e) {
-			$("#preview").attr("src", e.target.result);
 			setPhoto(e.target.result);
+			$("#preview").attr("src", e.target.result);			
     };
 
     reader.readAsDataURL(e.target.files[0]);
@@ -112,15 +126,13 @@ export const EditUser = () => {
 			return;
 		}
 
+
 		await Meteor.call('users.edit', username, password, email, date, gender, company, photo, function (error) {
 			if(error && error.error === 'Usuário já existe') {				
 				const errorMessage = document.getElementById('error');
 				errorMessage.setAttribute("style", "display: flex");
 				document.getElementsByClassName("MuiAlert-message")[0].innerHTML = error.error;
 			} else {
-				const errorUsuario = document.getElementById('error');
-				errorUsuario.setAttribute("style", "display: none");
-
 				Meteor.loginWithPassword(username, password, function (error) {
 					if(!error){
 						setUsername(username);
@@ -189,7 +201,7 @@ export const EditUser = () => {
 						<>
 							<div className='title'>
 								<div className='addPhoto'>		
-									<CameraEnhanceOutlinedIcon className='camera' titleAccess='Alterar foto de perfil' onClick={ () => uploadProfileImage() } />		
+									<CameraEnhanceOutlinedIcon className='camera' titleAccess='Alterar foto de perfil' onClick={ uploadProfileImage } />		
 																	
 									<div className='photoProfile'>										
 										{ photo ? (

@@ -21,6 +21,7 @@ Meteor.methods ({
 	},
 	
 	'users.edit'(username, password, email, date, gender, company, photo) {
+
 		check(username, String);
 		check(password, String);
 		check(email, String);
@@ -34,8 +35,8 @@ Meteor.methods ({
 		}
 
 		const user = Meteor.users.findOne({ _id: this.userId });
-
-		if(user.username != username){
+			
+		if(user.username != username) {
 			if(!Accounts.findUserByUsername(username)) {
 				Meteor.users.update({ _id: this.userId }, {
 					$set: {
@@ -51,7 +52,7 @@ Meteor.methods ({
 			} else {
 				throw new Meteor.Error('Usuário já existe');
 			}	
-		} else { // se o username for igual ao user não precisa alterar			
+		} else { // se o username for igual ao user não precisa alterar		
 			Meteor.users.update({ _id: this.userId }, {
 				$set: {
 					email: email,
