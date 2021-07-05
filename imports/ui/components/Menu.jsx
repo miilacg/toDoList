@@ -59,14 +59,14 @@ export function Menu({ createUser, user }) {
 					<div className='app-header'>
 						{ createUser ? ( // Se for a página de login	
 							<>
-								<h1>📝️ To do list </h1>
+								<h1><span>📝️ </span> To do list</h1>
 								<Link to={ createUser }>Criar conta</Link>
 							</>	
 						) : (
 							user ? ( // Páginas dentro do to do list		
 								<>
 									<Link to="/dashboard">
-										<h1>📝️ To do list</h1>
+									<h1><span>📝️ </span> To do list</h1>
 									</Link>
 						
 									<Button className='user' onClick={ handleDrawer(true) }> 
@@ -76,7 +76,7 @@ export function Menu({ createUser, user }) {
 		
 							) : ( // Se for qualquer outra página
 								<Link to="/">
-									<h1>📝️ To do list</h1>
+									<h1><span>📝️ </span> To do list</h1>
 								</Link>					
 							)					
 						) }    
@@ -89,7 +89,7 @@ export function Menu({ createUser, user }) {
 						role="presentation"						
 						onKeyDown={ handleDrawer(false) }
 					>
-						<h1>📝️ To do list </h1>
+						<h1><span>📝️ </span> To do list</h1>
 
 						<List>
 							<ListItem button onClick={ handleClick }>
