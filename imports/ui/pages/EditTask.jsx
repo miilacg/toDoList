@@ -75,32 +75,7 @@ export const EditTask = () => {
 	useEffect(() => {
 		colorChecked();
 	}, [task.situation]);
-	
 
-	useEffect(() => {
-		if(user && user._id === task.userId) {
-			if(situation == 'Cadastrada') {
-				const progress = document.getElementById('inProgress');
-				const completed = document.getElementById('completed');
-				progress.removeAttribute('disabled');
-				completed.setAttribute('disabled', 'disabled');
-			}
-	
-			if(situation == 'Concluida') {
-				const progress = document.getElementById('inProgress');
-				const registered = document.getElementById('registered');
-				registered.removeAttribute('disabled');
-				progress.setAttribute('disabled', 'disabled');
-			}
-	
-			if(situation == 'Em andamento') {
-				const registered = document.getElementById('registered');
-				const completed = document.getElementById('completed');
-				registered.removeAttribute('disabled');
-				completed.removeAttribute('disabled');
-			}
-		}    
-	}, [situation]);
 	
 	function handleSubmit(e) {
 		e.preventDefault();		
@@ -144,9 +119,29 @@ export const EditTask = () => {
 									<form className='form taskForm' onSubmit={ handleSubmit }>
 										<FormControl className='radio'>
 											<RadioGroup row aria-label="Situação" name="situation" value={ situation } onChange={ (e) => setSituation(e.target.value) }>
-												<FormControlLabel className='registered' id='controlRegistered' value="Cadastrada" control={<Radio id='registered' />} label="Cadastrada" />
-												<FormControlLabel className='inProgress' value="Em andamento" control={<Radio id='inProgress' />} label="Em andamento" />
-												<FormControlLabel className='completed' value="Concluida" control={<Radio id='completed' />} label="Concluida" />
+												<FormControlLabel 
+													className='registered' 
+													id='controlRegistered' 
+													value="Cadastrada" 
+													control={<Radio id='registered' />} 
+													label="Cadastrada"
+												/>
+
+												<FormControlLabel 
+													className='inProgress' 
+													value="Em andamento" 
+													control={<Radio id='inProgress' />} 
+													label="Em andamento"
+													disabled={ situation === 'Concluida' ? true : false } 
+												/>
+												
+												<FormControlLabel 
+													className='completed' 
+													value="Concluida" 
+													control={<Radio id='completed' />} 
+													label="Concluida" 
+													disabled={ situation === 'Cadastrada' ? true : false } 
+												/>
 											</RadioGroup>
 										</FormControl>
 
