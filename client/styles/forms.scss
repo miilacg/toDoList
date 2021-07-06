@@ -45,18 +45,6 @@ form {
 		.MuiIconButton-root {
 			padding: .36rem .5rem .5rem;
 		}
-
-		.registered .MuiRadio-colorSecondary.Mui-checked {
-			color: var(--checkedRegistred);
-		}
-
-		.inProgress .MuiRadio-colorSecondary.Mui-checked {
-			color: var(--checkedProgress);
-		}
-
-		.completed .MuiRadio-colorSecondary.Mui-checked {
-			color: green;
-		}
 	}
 	
 	span.MuiIconButton-label {

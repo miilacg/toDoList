@@ -18,6 +18,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { useCurrentDate } from '../../hooks/useCurrentDate';
 
+import { CheckedSituation } from '../components/CheckedSituation';
+
 import '../../../client/styles/forms.scss';
 import '../../../client/styles/task.scss';
 
@@ -98,7 +100,7 @@ export function TaskForm({
 		onClickExit();
 	};
 
-	  
+		  
 	return (
 		<form className='form taskForm' onSubmit={ handleSubmit }>
 			<TextField					
@@ -118,33 +120,10 @@ export function TaskForm({
 			/>
 
 			{ action == 'edition' &&
-				<FormControl className='radio'>
-					<FormLabel>Situação</FormLabel>
-					<RadioGroup row aria-label="Situação" name="situation" value={ situation } onChange={ (e) => setSituation(e.target.value) }>
-						<FormControlLabel 
-							className='registered' 
-							value="Cadastrada" 
-							control={<Radio id='registered' />} 
-							label="Cadastrada"
-						/>
-
-						<FormControlLabel 
-							className='inProgress' 
-							value="Em andamento" 
-							control={<Radio id='inProgress' />} 
-							label="Em andamento"
-							disabled={ situation === 'Concluida' ? true : false } 
-						/>
-						
-						<FormControlLabel 
-							className='completed' 
-							value="Concluida" 
-							control={<Radio id='completed' />} 
-							label="Concluida" 
-							disabled={ situation === 'Cadastrada' ? true : false } 
-						/>
-					</RadioGroup>
-				</FormControl>
+				<CheckedSituation 
+					situation={ situation }
+					onChange={ (e) => setSituation(e.target.value) }
+				/>
 			}
 
 			<TextField

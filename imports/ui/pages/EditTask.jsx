@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 
 import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
 
 import { TasksCollection } from '../../db/TasksCollection';
 
 import { useCurrentDate } from '../../hooks/useCurrentDate';
 
+import { CheckedSituation } from '../components/CheckedSituation';
 import { Menu } from '../components/Menu';
 import { TaskForm } from '../components/TaskForm';
 
@@ -24,10 +21,8 @@ export const EditTask = () => {
 	Meteor.subscribe('allUsers');
 
 	let { taskId } = useParams();
-	const history = useHistory();
 
 	const [state, setState] = useState(true); // true é para visualização
-	const [situation, setSituation] = useState('');
 	
 	const changeState = () => {
 		setState(!state);
@@ -36,15 +31,16 @@ export const EditTask = () => {
 	const { task, user, username, isLoading } = useTracker(() => {
 		const noDataAvailable = { task: [] };
 		const handleTask = Meteor.subscribe('tasks');
+		Meteor.subscribe('users');
 
 		if(!handleTask.ready()) {
       return { ...noDataAvailable, isLoading: true };
     }
 		
-		let user = Meteor.user();
 		if(!Meteor.user()){
 			return { ...noDataAvailable, isLoading: true };
 		}
+		const user = Meteor.user();
 
 		const task = TasksCollection.findOne({ _id: taskId });
 		if(!task){
@@ -63,32 +59,6 @@ export const EditTask = () => {
 	const { year, month, day, hour, minute } = useCurrentDate(task.date);
 	date = day + '/' + month + '/' + year + ' - ' + hour + ':' + minute;
 	
-
-	function colorChecked() { //necessario para colorir a situação que tiver selecionada quando a página for carregada
-		if(!task.situation) {
-			return { isLoading: true }
-		}
-
-		setSituation(task.situation);
-	}
-
-	useEffect(() => {
-		colorChecked();
-	}, [task.situation]);
-
-	
-	function handleSubmit(e) {
-		e.preventDefault();		
-		
-		if(!situation) return;
-
-		Meteor.call('tasks.setSituation', taskId, situation, function (error) {
-			if(!error) {				
-				history.push(`/toDoList/${ user._id }`);
-			}
-		})
-	};
-
 
 	return (			
 		<div className='app'>
@@ -115,42 +85,18 @@ export const EditTask = () => {
 									<div className='buttons notUser'>
 										<Button variant="contained"><Link to={ `/toDoList/${ user._id }` }>Voltar</Link></Button>
 									</div>
-								) : (
-									<form className='form taskForm' onSubmit={ handleSubmit }>
-										<FormControl className='radio'>
-											<RadioGroup row aria-label="Situação" name="situation" value={ situation } onChange={ (e) => setSituation(e.target.value) }>
-												<FormControlLabel 
-													className='registered' 
-													id='controlRegistered' 
-													value="Cadastrada" 
-													control={<Radio id='registered' />} 
-													label="Cadastrada"
-												/>
-
-												<FormControlLabel 
-													className='inProgress' 
-													value="Em andamento" 
-													control={<Radio id='inProgress' />} 
-													label="Em andamento"
-													disabled={ situation === 'Concluida' ? true : false } 
-												/>
-												
-												<FormControlLabel 
-													className='completed' 
-													value="Concluida" 
-													control={<Radio id='completed' />} 
-													label="Concluida" 
-													disabled={ situation === 'Cadastrada' ? true : false } 
-												/>
-											</RadioGroup>
-										</FormControl>
+								) : (	
+									<>
+										<CheckedSituation 
+											taskId={ taskId }
+											situation={ task.situation }
+										/>
 
 										<div className='buttons'>
 											<Button variant="contained"><Link to={ `/toDoList/${ user._id }` }>Voltar</Link></Button>
-											<Button type='submit' variant="contained">Salvar status</Button>
 											<Button type='button' variant="contained" onClick={ changeState }>Editar tarefa</Button>
-										</div>		
-									</form>			
+										</div>
+									</>											
 								)	}														
 							</div>							
 						</>

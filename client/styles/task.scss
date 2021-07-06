@@ -144,6 +144,28 @@ h3#titleModalAddTask{
   }
 }
 
+// Situação
+.information {  
+  .radio .MuiFormGroup-root {
+    padding-left: 1.8rem;
+
+    .MuiFormControlLabel-root {
+      margin-right: 2rem;
+    }    
+
+    .registered .MuiRadio-colorSecondary.Mui-checked {
+      color: var(--checkedRegistred);
+    }
+
+    .inProgress .MuiRadio-colorSecondary.Mui-checked {
+      color: var(--checkedProgress);
+    }
+
+    .completed .MuiRadio-colorSecondary.Mui-checked {
+      color: green;
+    }
+  }
+}
 
 // Icon de apresentação da situação
 .MuiListItemIcon-root {
