@@ -70,7 +70,13 @@ export function Menu({ createUser, user }) {
 									</Link>
 						
 									<Button className='user' onClick={ handleDrawer(true) }> 
-										{ user.username } 🚪 
+										{ user.photo ? (
+											<div className="imgProfile">
+												<img src={ user.photo } className="img-fluid" label="Foto do usuário" />
+											</div>
+										) : (
+											<AccountCircleRoundedIcon />
+										) } 
 									</Button>
 								</>
 		
