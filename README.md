@@ -2,7 +2,7 @@
 <br>
 
 <p align="center">
-  <img alt="jogo da velha" src="./public/images/interface.png" width="95%">
+  <img alt="to do list" src="./public/images/interface.png" width="95%">
 </p>
 <br>
 
@@ -22,7 +22,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - Meteor React
 - ReactJS
 - HTML
-- CSS
+- SCSS
 - MongoDB
 
 
